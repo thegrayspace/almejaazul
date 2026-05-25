@@ -113,8 +113,20 @@ The dashboard nav links to these pages but they don't exist yet:
 
 ## Known Issues
 1. **Admin dashboard 404s** — 9 nav items link to unbuilt pages (see above)
-2. **Neon connection drop warnings** in dev console — `prisma:error Error in PostgreSQL connection: Error { kind: Closed }` — harmless, Neon drops idle connections on free tier
-3. **Hydration warning** in browser — caused by ClickUp Chrome extension injecting a class on `<body>`, not a code issue
+2. **`/build` page 404s** — `app/(public)/build/page.tsx` exists but the route isn't resolving; needs investigation
+3. **Neon connection drop warnings** in dev console — `prisma:error Error in PostgreSQL connection: Error { kind: Closed }` — harmless, Neon drops idle connections on free tier
+4. **Hydration warning** in browser — caused by ClickUp Chrome extension injecting a class on `<body>`, not a code issue
+
+## Local Schema Fix Needed
+The VS Code session added `connection_limit = 1` to `prisma/schema.prisma` locally but it's invalid in Prisma v6.
+The `datasource db` block in the local file must be:
+```prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+```
+Remove any extra properties. Then run `npx prisma generate` to regenerate the client.
 
 ---
 
