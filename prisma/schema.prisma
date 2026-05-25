@@ -1,0 +1,368 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── ENUMS ───────────────────────────────────────────────────────────────────
+
+enum PriceMode {
+  NUMERIC       // display the price field as-is
+  INQUIRE       // "Inquire for rates"
+  INCLUDED      // "Included for guests"
+  COMPLIMENTARY // "Complimentary"
+  ON_REQUEST    // "On Request"
+  CUSTOM        // display customPriceText
+}
+
+enum InquiryStatus {
+  NEW
+  RESPONDED
+  CONFIRMED
+  CANCELLED
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  EDITOR
+}
+
+enum ActivityCategory {
+  COURT_SPORT
+  TEAM_SPORT
+  GIANT_LEISURE
+  LAWN_GAME
+  BEACH_SPORT
+  WATER_SPORT
+  LEISURE_NATURE
+}
+
+enum FloorPlanType {
+  MANGROVE_PAVILION
+  VOW_BY_THE_SEA
+  CUSTOM
+}
+
+// ─── SITE SETTINGS ───────────────────────────────────────────────────────────
+
+model SiteSettings {
+  id             String   @id @default(cuid())
+  resortName     String   @default("Almeja Azul")
+  tagline        String   @default("LYR Beach Resort · Samal Island")
+  address        String   @default("Brgy. Adecor, Samal Island, Davao del Norte")
+  phone          String   @default("0999 308 8800")
+  phoneE164      String   @default("+639993088800")
+  messengerUrl   String   @default("https://m.me/AlmejaAzulResort")
+  facebookUrl    String   @default("https://www.facebook.com/AlmejaAzulResort/")
+  instagramUrl   String   @default("")
+  googleMapsUrl  String   @default("")
+  logoUrl        String   @default("/uploads/Almeja_Logo_Large_PNG.png")
+  messengerLogoUrl String @default("/uploads/Logo_FB_Messenger.jpeg")
+  footerText     String   @default("Five hectares of white sand and open sea on Samal Island. Two beach fronts. One resort that knows when to get out of the way.")
+  active         Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+// ─── PAGES ────────────────────────────────────────────────────────────────────
+
+model Page {
+  slug           String   @id
+  title          String
+  metaTitle      String   @default("")
+  metaDescription String  @default("")
+  heroEyebrow    String   @default("")
+  heroTitle      String   @default("")
+  heroSubtitle   String   @default("")
+  heroImageUrl   String   @default("")
+  ctaLabel       String   @default("")
+  ctaUrl         String   @default("")
+  isPublished    Boolean  @default(true)
+  sortOrder      Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  sections PageSection[]
+}
+
+model PageSection {
+  id                String   @id @default(cuid())
+  pageSlug          String
+  sectionKey        String
+  eyebrow           String   @default("")
+  title             String   @default("")
+  subtitle          String   @default("")
+  body              String   @default("")
+  backgroundType    String   @default("light")
+  backgroundImageUrl String  @default("")
+  layoutType        String   @default("default")
+  contentJson       Json?
+  isPublished       Boolean  @default(true)
+  sortOrder         Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  page Page @relation(fields: [pageSlug], references: [slug], onDelete: Cascade)
+
+  @@unique([pageSlug, sectionKey])
+  @@index([pageSlug])
+}
+
+// ─── ROOMS & SPACES ───────────────────────────────────────────────────────────
+
+model Room {
+  id               String     @id @default(cuid())
+  tag              String
+  name             String
+  subtitle         String     @default("")
+  capacity         String
+  basePrice        Decimal    @db.Decimal(10, 2)
+  currency         String     @default("PHP")
+  priceSuffix      String     @default("/night")
+  priceMode        PriceMode  @default(NUMERIC)
+  customPriceText  String     @default("")
+  shortDescription String     @default("")
+  longDescription  String
+  amenitiesJson    Json       @default("[]")
+  note             String     @default("")
+  cardImageUrl     String
+  modalImageUrl    String
+  isFeatured       Boolean    @default(false)
+  layoutSize       String     @default("default")
+  isPublished      Boolean    @default(true)
+  sortOrder        Int        @default(0)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+}
+
+model BookableSpace {
+  id               String    @id @default(cuid())
+  tag              String
+  name             String
+  capacity         String
+  price            Decimal   @db.Decimal(10, 2)
+  priceSub         String    @default("")
+  priceMode        PriceMode @default(NUMERIC)
+  customPriceText  String    @default("")
+  description      String
+  amenitiesJson    Json      @default("[]")
+  note             String    @default("")
+  imageUrl         String
+  modalImageUrl    String    @default("")
+  isPublished      Boolean   @default(true)
+  sortOrder        Int       @default(0)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+// ─── DAY TOUR ─────────────────────────────────────────────────────────────────
+
+model DayPass {
+  id             String    @id @default(cuid())
+  name           String
+  icon           String
+  price          Decimal   @db.Decimal(10, 2)
+  priceSuffix    String
+  priceMode      PriceMode @default(NUMERIC)
+  customPriceText String   @default("")
+  pricingJson    Json      @default("[]")
+  includesJson   Json      @default("[]")
+  note           String    @default("")
+  isHighlighted  Boolean   @default(false)
+  imageUrl       String    @default("")
+  isPublished    Boolean   @default(true)
+  sortOrder      Int       @default(0)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model AddOn {
+  id              String    @id @default(cuid())
+  name            String
+  icon            String
+  price           Decimal   @db.Decimal(10, 2)
+  priceMode       PriceMode @default(NUMERIC)
+  customPriceText String    @default("")
+  description     String
+  category        String    @default("general")
+  isPublished     Boolean   @default(true)
+  sortOrder       Int       @default(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+// ─── ACTIVITIES ───────────────────────────────────────────────────────────────
+
+model Activity {
+  id              String           @id @default(cuid())
+  category        ActivityCategory
+  name            String
+  subtitle        String           @default("")
+  description     String           @default("")
+  price           Decimal          @db.Decimal(10, 2)
+  priceMode       PriceMode        @default(NUMERIC)
+  customPriceText String           @default("")
+  availability    String           @default("")
+  featuresJson    Json             @default("[]")
+  imageUrl        String           @default("")
+  icon            String           @default("")
+  layoutSize      String           @default("default")
+  isPlaceholder   Boolean          @default(false)
+  isPublished     Boolean          @default(true)
+  sortOrder       Int              @default(0)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+// ─── TOURS ────────────────────────────────────────────────────────────────────
+
+model Tour {
+  id              String    @id @default(cuid())
+  tag             String
+  name            String
+  shortDescription String
+  detail          String
+  price           Decimal   @db.Decimal(10, 2)
+  priceMode       PriceMode @default(NUMERIC)
+  customPriceText String    @default("")
+  duration        String
+  includesJson    Json      @default("[]")
+  imageUrl        String
+  modalImageUrl   String    @default("")
+  isPublished     Boolean   @default(true)
+  sortOrder       Int       @default(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+// ─── EVENTS & BUILD ───────────────────────────────────────────────────────────
+
+model EventPackage {
+  id              String    @id @default(cuid())
+  type            String    @default("corporate")
+  name            String
+  includesText    String
+  price           Decimal   @db.Decimal(10, 2)
+  priceMode       PriceMode @default(INQUIRE)
+  customPriceText String    @default("")
+  description     String
+  imageUrl        String    @default("")
+  featuresJson    Json      @default("[]")
+  minPax          Int       @default(1)
+  maxPax          Int       @default(100)
+  durationsJson   Json      @default("[]")
+  isPublished     Boolean   @default(true)
+  sortOrder       Int       @default(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Venue {
+  id                String        @id @default(cuid())
+  type              String
+  name              String
+  tag               String
+  capacity          String
+  subtitle          String        @default("")
+  description       String
+  imageUrl          String
+  modalImageUrl     String        @default("")
+  floorPlanSvgType  FloorPlanType @default(CUSTOM)
+  floorPlanJson     Json?
+  amenitiesJson     Json          @default("[]")
+  price             Decimal       @db.Decimal(10, 2)
+  priceMode         PriceMode     @default(INQUIRE)
+  customPriceText   String        @default("")
+  isPublished       Boolean       @default(true)
+  sortOrder         Int           @default(0)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+}
+
+// ─── FAQ ──────────────────────────────────────────────────────────────────────
+
+model FAQ {
+  id          String   @id @default(cuid())
+  pageSlug    String
+  question    String
+  answer      String
+  isPublished Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([pageSlug])
+}
+
+// ─── MEDIA ────────────────────────────────────────────────────────────────────
+
+model MediaAsset {
+  id          String   @id @default(cuid())
+  fileName    String
+  url         String
+  altText     String   @default("")
+  category    String   @default("general")
+  source      String   @default("upload")
+  uploadedBy  String   @default("")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ─── INQUIRIES ────────────────────────────────────────────────────────────────
+
+model Inquiry {
+  id                String        @id @default(cuid())
+  name              String
+  email             String
+  phone             String        @default("")
+  inquiryType       String
+  requestedDate     DateTime?
+  departurDate      DateTime?
+  guestCount        Int?
+  message           String        @default("")
+  sourcePage        String        @default("")
+  relatedEntityType String        @default("")
+  relatedEntityId   String        @default("")
+  status            InquiryStatus @default(NEW)
+  adminNotes        String        @default("")
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+}
+
+// ─── ADMIN USERS ──────────────────────────────────────────────────────────────
+
+model AdminUser {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String
+  role          AdminRole @default(EDITOR)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  lastLoginAt   DateTime?
+}
+
+// ─── FOOTER & SOCIAL ──────────────────────────────────────────────────────────
+
+model FooterLink {
+  id          String   @id @default(cuid())
+  groupLabel  String
+  label       String
+  url         String
+  sortOrder   Int      @default(0)
+  isPublished Boolean  @default(true)
+}
+
+model FacebookUpdate {
+  id          String   @id @default(cuid())
+  dateLabel   String
+  title       String   @default("")
+  body        String
+  url         String   @default("")
+  isPublished Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
