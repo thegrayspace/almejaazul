@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { SESSION_OPTIONS } from '@/lib/auth';
 import { sealData } from 'iron-session';
-import type { SessionData } from '@/lib/auth';
+import { serialize } from 'cookie';
+import { SESSION_OPTIONS, type SessionData } from '@/lib/session-config';
 
 const LoginSchema = z.object({
   email: z.string().email().max(200),
@@ -61,23 +61,30 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }
 
-    // Seal the session data using iron-session's sealData directly.
-    // Then set the cookie explicitly on the NextResponse — this is the most
-    // reliable approach in Next.js 15 App Router Route Handlers, bypassing
-    // any async-context cookie plumbing.
+    // Seal session data with iron-session's sealData
     const sessionData: SessionData = { isLoggedIn: true, userId: user.id, email: user.email };
-    const seal = await sealData(sessionData, { password: SESSION_OPTIONS.password as string });
+    const seal = await sealData(sessionData, {
+      password: SESSION_OPTIONS.password as string,
+    });
 
-    const response = NextResponse.json({ success: true });
-    response.cookies.set(SESSION_OPTIONS.cookieName, seal, {
-      httpOnly: SESSION_OPTIONS.cookieOptions?.httpOnly ?? true,
-      secure: SESSION_OPTIONS.cookieOptions?.secure ?? (process.env.NODE_ENV === 'production'),
-      sameSite: (SESSION_OPTIONS.cookieOptions?.sameSite as 'lax' | 'strict' | 'none') ?? 'lax',
+    // Build the Set-Cookie string directly with the `cookie` package and
+    // pass it in the Response constructor headers — the most reliable path
+    // because it bypasses ResponseCookies / next/headers plumbing entirely.
+    const cookieStr = serialize(SESSION_OPTIONS.cookieName, seal, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
       maxAge: SESSION_OPTIONS.cookieOptions?.maxAge ?? 60 * 60 * 24 * 7,
       path: '/',
     });
 
-    return response;
+    return new NextResponse(JSON.stringify({ success: true }), {
+      status: 200,
+      headers: {
+        'content-type': 'application/json',
+        'set-cookie': cookieStr,
+      },
+    });
   } catch (err) {
     console.error('[admin/login] error:', err);
     return NextResponse.json({ error: 'Server error' }, { status: 500 });

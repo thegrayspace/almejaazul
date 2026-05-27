@@ -1,15 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { SESSION_OPTIONS } from '@/lib/auth';
+import { serialize } from 'cookie';
+import { SESSION_OPTIONS } from '@/lib/session-config';
 
 export async function GET(req: NextRequest) {
-  const response = NextResponse.redirect(new URL('/admin/login', req.url));
-  // Clear the session cookie explicitly on the response
-  response.cookies.set(SESSION_OPTIONS.cookieName, '', {
-    httpOnly: SESSION_OPTIONS.cookieOptions?.httpOnly ?? true,
-    secure: SESSION_OPTIONS.cookieOptions?.secure ?? (process.env.NODE_ENV === 'production'),
-    sameSite: (SESSION_OPTIONS.cookieOptions?.sameSite as 'lax' | 'strict' | 'none') ?? 'lax',
+  // Expire the session cookie immediately
+  const cookieStr = serialize(SESSION_OPTIONS.cookieName, '', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
     maxAge: 0,
     path: '/',
   });
-  return response;
+
+  return new NextResponse(null, {
+    status: 302,
+    headers: {
+      location: new URL('/admin/login', req.url).toString(),
+      'set-cookie': cookieStr,
+    },
+  });
 }
