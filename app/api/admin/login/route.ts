@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 import { z } from 'zod';
 import { SESSION_OPTIONS } from '@/lib/auth';
 import { getIronSession } from 'iron-session';
@@ -61,14 +62,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }
 
-    const res = NextResponse.json({ success: true });
-    const session = await getIronSession<SessionData>(req, res, SESSION_OPTIONS);
+    const cookieStore = await cookies();
+    const session = await getIronSession<SessionData>(cookieStore, SESSION_OPTIONS);
     session.isLoggedIn = true;
     session.userId = user.id;
     session.email = user.email;
     await session.save();
 
-    return res;
+    return NextResponse.json({ success: true });
   } catch (err) {
     console.error('[admin/login] error:', err);
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
