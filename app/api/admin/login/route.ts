@@ -73,13 +73,6 @@ export async function POST(req: NextRequest) {
       maxAge: SESSION_OPTIONS.cookieOptions?.maxAge ?? 60 * 60 * 24 * 7,
       path: '/',
     });
-    console.log('[admin/login] success', {
-      sealLen: seal.length,
-      authSecretLen: process.env.AUTH_SECRET?.length ?? 0,
-      cookieName: SESSION_OPTIONS.cookieName,
-      nodeEnv: process.env.NODE_ENV,
-      respSetCookieHeader: response.headers.get('set-cookie')?.slice(0, 80) ?? null,
-    });
     return response;
   } catch (err) {
     console.error('[admin/login] error:', err);
