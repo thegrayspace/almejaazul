@@ -16,6 +16,11 @@ export async function getSession(): Promise<IronSession<SessionData>> {
 export async function requireAdminSession(): Promise<SessionData> {
   const session = await getSession();
   if (!session.isLoggedIn) {
+    console.log('[requireAdminSession] redirecting to login', {
+      hasCookie: !!(await cookies()).get(SESSION_OPTIONS.cookieName),
+      authSecretLen: process.env.AUTH_SECRET?.length ?? 0,
+      sessionRaw: JSON.stringify(session),
+    });
     redirect('/admin/login');
   }
   return session;
