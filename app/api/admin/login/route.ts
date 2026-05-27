@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { sealData } from 'iron-session';
+import { getIronSession } from 'iron-session';
+import { cookies } from 'next/headers';
 import { SESSION_OPTIONS, type SessionData } from '@/lib/session-config';
 
 const LoginSchema = z.object({
@@ -60,20 +61,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }
 
-    const sessionData: SessionData = { isLoggedIn: true, userId: user.id, email: user.email };
-    const seal = await sealData(sessionData, {
-      password: SESSION_OPTIONS.password as string,
-    });
+    // Use getIronSession + session.save() — identical code path to requireAdminSession's
+    // unseal, guaranteeing the seal format and TTL parameters are compatible.
+    const session = await getIronSession<SessionData>(await cookies(), SESSION_OPTIONS);
+    session.isLoggedIn = true;
+    session.userId = user.id;
+    session.email = user.email;
+    await session.save();
 
-    const response = NextResponse.json({ success: true });
-    response.cookies.set(SESSION_OPTIONS.cookieName, seal, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: SESSION_OPTIONS.cookieOptions?.maxAge ?? 60 * 60 * 24 * 7,
-      path: '/',
-    });
-    return response;
+    return NextResponse.json({ success: true });
   } catch (err) {
     console.error('[admin/login] error:', err);
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
