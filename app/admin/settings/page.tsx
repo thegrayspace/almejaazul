@@ -1,7 +1,9 @@
-import { requireAdminSession } from '@/lib/auth';
+﻿import { requireAdminSession } from '@/lib/auth';
 import { prisma } from '@/lib/db';
 import AdminShell from '@/components/admin/AdminShell';
 import SettingsForm from '@/components/admin/SettingsForm';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = { title: 'Settings' };
 

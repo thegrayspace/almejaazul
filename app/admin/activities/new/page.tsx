@@ -1,6 +1,8 @@
-import { requireAdminSession } from '@/lib/auth';
+﻿import { requireAdminSession } from '@/lib/auth';
 import AdminShell from '@/components/admin/AdminShell';
 import ActivityForm from '@/components/admin/ActivityForm';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = { title: 'New Activity' };
 

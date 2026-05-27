@@ -1,7 +1,9 @@
-import { requireAdminSession } from '@/lib/auth';
+﻿import { requireAdminSession } from '@/lib/auth';
 import { prisma } from '@/lib/db';
 import AdminShell from '@/components/admin/AdminShell';
 import Link from 'next/link';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = { title: 'Tours' };
 

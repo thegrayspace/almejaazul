@@ -3,6 +3,8 @@ import { prisma } from '@/lib/db';
 import AdminShell from '@/components/admin/AdminShell';
 import SpaceForm from '@/components/admin/SpaceForm';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = { title: 'Edit Space' };
 
 interface Props { params: Promise<{ id: string }>; }

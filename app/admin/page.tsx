@@ -1,4 +1,4 @@
-import { requireAdminSession } from '@/lib/auth';
+﻿import { requireAdminSession } from '@/lib/auth';
 import Link from 'next/link';
 
 const ADMIN_NAV = [
@@ -15,6 +15,8 @@ const ADMIN_NAV = [
   { href: '/admin/media', label: 'Media', desc: 'Upload and manage images' },
   { href: '/admin/settings', label: 'Settings', desc: 'Site settings, contact info, social links' },
 ];
+
+export const dynamic = 'force-dynamic';
 
 export default async function AdminDashboard() {
   await requireAdminSession();

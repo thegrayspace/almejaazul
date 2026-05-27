@@ -3,6 +3,8 @@ import { prisma } from '@/lib/db';
 import AdminShell from '@/components/admin/AdminShell';
 import DayPassForm from '@/components/admin/DayPassForm';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = { title: 'Edit Day Pass' };
 
 interface Props { params: Promise<{ id: string }>; }

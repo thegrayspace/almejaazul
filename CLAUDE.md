@@ -19,7 +19,24 @@ Migrated from static HTML prototypes to a full-stack Next.js 15 app with a CMS a
 
 ---
 
-## Environment Variables (`.env.local`)
+## Architecture Decision
+**Keep as a Next.js monolith.** A frontend/backend split was evaluated and rejected — no technical benefit for this project's scale. API routes, RSCs, and admin CMS all live in the same repo and deploy together to Vercel.
+
+---
+
+## Deployment: Vercel
+- Deployed at Vercel (connected to GitHub repo — pushes to `main` auto-deploy)
+- All four environment variables must be set in the Vercel dashboard (not just `.env.local`)
+- `.vercel/` is in `.gitignore` — do not commit it
+
+### Vercel-specific gotchas
+- **Do not add `build/` to `.gitignore`.** This was the root cause of the `/build` page 404 on Vercel: a CRA-leftover `build/` ignore pattern silently excluded `app/(public)/build/page.tsx` from git, so Vercel never received the file. It has been removed. Next.js outputs to `.next/`, not `build/`.
+- **`export const dynamic = 'force-dynamic'`** is set on `app/(public)/build/page.tsx` to prevent Neon cold-start timeouts from stalling static generation during `next build`.
+- **Neon connection drop warnings** (`prisma:error Error { kind: Closed }`) are harmless — Neon drops idle connections on the free tier.
+
+---
+
+## Environment Variables (`.env.local` locally, Vercel dashboard in production)
 ```
 DATABASE_URL=        # Neon PostgreSQL connection string
 AUTH_SECRET=         # >= 32 char random string
@@ -46,6 +63,7 @@ prisma/schema.prisma   Full DB schema
 prisma/seed.ts         Seeds DB with content + admin user
 styles/brand.css       Resort brand CSS (colors, typography, utilities)
 styles/pages/          Per-page CSS files
+project/               Original HTML prototypes — visual reference for public pages
 ```
 
 ---
@@ -68,16 +86,18 @@ styles/pages/          Per-page CSS files
 | `FacebookUpdate` | FB posts displayed on home page |
 | `MediaAsset` | Uploaded image library |
 
+Prisma v6 — `datasource db` block must only have `provider` and `url`. No `connection_limit` or other extra properties (Prisma v6 dropped them).
+
 ---
 
 ## What's Built
 
-### Public Pages
+### Public Pages (all working)
 - [x] Home (`/`) — hero, section hub, mangrove parallax, FB updates section
 - [x] Stay (`/stay`) — rooms grid + bookable spaces
 - [x] Day Tour (`/day-tour`) — pass cards + FAQ accordion
 - [x] Fun (`/fun`) — sports/water/leisure grids
-- [x] Build (`/build`) — corporate packages + wedding venues tabs
+- [x] Build (`/build`) — corporate packages + wedding venues tabs (BuildTabs component)
 - [x] See (`/see`) — tours grid
 - [x] Archive (`/archive`) — static content page
 
@@ -87,19 +107,19 @@ styles/pages/          Per-page CSS files
 - [x] Rooms CRUD (`/admin/rooms`)
 - [x] FAQs CRUD (`/admin/faqs`)
 - [x] Inquiries list + status update (`/admin/inquiries`)
-- [x] Spaces CRUD (`/admin/spaces`) — BookableSpace administration
-- [x] Day Passes CRUD (`/admin/day-passes`) — DayPass pricing administration
-- [x] Add-Ons CRUD (`/admin/addons`) — AddOn upsells administration
-- [x] Activities CRUD (`/admin/activities`) — Activity listings administration
-- [x] Tours CRUD (`/admin/tours`) — Tour excursions administration
-- [x] Event Packages CRUD (`/admin/packages`) — EventPackage corporate/retreat packages administration
-- [x] Venues CRUD (`/admin/venues`) — Venue floor plans/details administration
-- [x] Media Manager (`/admin/media`) — MediaAsset library + local upload form
-- [x] Site Settings Editor (`/admin/settings`) — SiteSettings editor form
+- [x] Spaces CRUD (`/admin/spaces`)
+- [x] Day Passes CRUD (`/admin/day-passes`)
+- [x] Add-Ons CRUD (`/admin/addons`)
+- [x] Activities CRUD (`/admin/activities`)
+- [x] Tours CRUD (`/admin/tours`)
+- [x] Event Packages CRUD (`/admin/packages`)
+- [x] Venues CRUD (`/admin/venues`)
+- [x] Media Manager (`/admin/media`)
+- [x] Site Settings Editor (`/admin/settings`)
 
 ### Infrastructure
-- [x] Prisma schema + migration (run locally)
-- [x] Seed script (run locally — creates admin user + all content)
+- [x] Prisma schema + migration
+- [x] Seed script (creates admin user + all content)
 - [x] iron-session auth + middleware route protection
 - [x] Inquiry form API (`POST /api/inquiries`)
 - [x] Media upload utility (`lib/media.ts`)
@@ -107,20 +127,17 @@ styles/pages/          Per-page CSS files
 ---
 
 ## Known Issues
-1. **`/build` page 404s** — `app/(public)/build/page.tsx` exists but the route isn't resolving; needs investigation
-2. **Neon connection drop warnings** in dev console — `prisma:error Error in PostgreSQL connection: Error { kind: Closed }` — harmless, Neon drops idle connections on free tier
-3. **Hydration warning** in browser — caused by ClickUp Chrome extension injecting a class on `<body>`, not a code issue
+- **Hydration warning** in browser — caused by ClickUp Chrome extension injecting a class on `<body>`. Not a code issue.
 
-## Local Schema Fix Needed
-The VS Code session added `connection_limit = 1` to `prisma/schema.prisma` locally but it's invalid in Prisma v6.
-The `datasource db` block in the local file must be:
-```prisma
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-```
-Remove any extra properties. Then run `npx prisma generate` to regenerate the client.
+---
+
+## Design System
+- **Brand colors:** `#1a2530` (dark navy), `#4BBFE0` (teal), `#f0ece3` (warm off-white)
+- **No Tailwind** — all styling is CSS classes from `styles/` or inline `style={{}}` objects
+- Public pages use CSS class names from the original HTML prototypes (preserved exactly)
+- Admin pages use inline `style={{}}` — intentional, keeps admin self-contained
+- Icons: `components/icons/index.tsx` — 18 SVG components matching `project/icons.jsx`
+- `PriceMode` enum: `NUMERIC | INQUIRE | INCLUDED | COMPLIMENTARY | ON_REQUEST | CUSTOM`
 
 ---
 
@@ -137,18 +154,4 @@ npm run dev                           # http://localhost:3000
 1. Clone: `git clone https://github.com/thegrayspace/almejaazul /home/claude/repo`
 2. Read this file
 3. Ask for a GitHub token if pushing is needed (user provides PAT)
-4. Make changes, commit, push
-
----
-
-## Design System Notes
-- **Brand colors:** `#1a2530` (dark navy), `#4BBFE0` (teal), `#f0ece3` (warm off-white)
-- **No Tailwind** — all styling is CSS classes from `styles/` or inline styles
-- Public pages use the CSS class system from the original HTML prototypes (preserved exactly)
-- Admin pages use inline `style={{}}` objects — intentional, keeps admin self-contained
-- Icons are in `components/icons/index.tsx` — 18 components matching the original `icons.jsx`
-- `PriceMode` enum controls how prices display: `NUMERIC | INQUIRE | INCLUDED | COMPLIMENTARY | ON_REQUEST | CUSTOM`
-
-## Original Source Files
-The `project/` directory contains the original HTML prototypes that the app was migrated from.
-Use these as the visual reference when building public pages.
+4. Make changes, commit, push to `main` (triggers Vercel deploy)

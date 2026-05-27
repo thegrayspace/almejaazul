@@ -3,6 +3,8 @@ import { prisma } from '@/lib/db';
 import AdminShell from '@/components/admin/AdminShell';
 import FAQForm from '@/components/admin/FAQForm';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = { title: 'Edit FAQ' };
 
 interface Props {

@@ -1,6 +1,8 @@
-import { requireAdminSession } from '@/lib/auth';
+﻿import { requireAdminSession } from '@/lib/auth';
 import AdminShell from '@/components/admin/AdminShell';
 import PackageForm from '@/components/admin/PackageForm';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = { title: 'New Package' };
 

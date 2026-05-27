@@ -3,6 +3,8 @@ import { prisma } from '@/lib/db';
 import AdminShell from '@/components/admin/AdminShell';
 import RoomForm from '@/components/admin/RoomForm';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = { title: 'Edit Room' };
 
 interface Props {

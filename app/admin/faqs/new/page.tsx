@@ -1,6 +1,8 @@
-import { requireAdminSession } from '@/lib/auth';
+﻿import { requireAdminSession } from '@/lib/auth';
 import AdminShell from '@/components/admin/AdminShell';
 import FAQForm from '@/components/admin/FAQForm';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = { title: 'New FAQ' };
 

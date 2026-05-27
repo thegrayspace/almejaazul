@@ -3,6 +3,8 @@ import { prisma } from '@/lib/db';
 import AdminShell from '@/components/admin/AdminShell';
 import VenueForm from '@/components/admin/VenueForm';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = { title: 'Edit Venue' };
 
 interface Props { params: Promise<{ id: string }>; }

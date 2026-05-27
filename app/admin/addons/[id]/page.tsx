@@ -3,6 +3,8 @@ import { prisma } from '@/lib/db';
 import AdminShell from '@/components/admin/AdminShell';
 import AddOnForm from '@/components/admin/AddOnForm';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = { title: 'Edit Add-On' };
 
 interface Props { params: Promise<{ id: string }>; }

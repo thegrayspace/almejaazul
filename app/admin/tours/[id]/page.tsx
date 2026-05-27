@@ -3,6 +3,8 @@ import { prisma } from '@/lib/db';
 import AdminShell from '@/components/admin/AdminShell';
 import TourForm from '@/components/admin/TourForm';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = { title: 'Edit Tour' };
 
 interface Props { params: Promise<{ id: string }>; }

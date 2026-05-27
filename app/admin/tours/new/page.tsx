@@ -1,6 +1,8 @@
-import { requireAdminSession } from '@/lib/auth';
+﻿import { requireAdminSession } from '@/lib/auth';
 import AdminShell from '@/components/admin/AdminShell';
 import TourForm from '@/components/admin/TourForm';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = { title: 'New Tour' };
 

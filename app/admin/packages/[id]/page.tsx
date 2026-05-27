@@ -3,6 +3,8 @@ import { prisma } from '@/lib/db';
 import AdminShell from '@/components/admin/AdminShell';
 import PackageForm from '@/components/admin/PackageForm';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = { title: 'Edit Package' };
 
 interface Props { params: Promise<{ id: string }>; }

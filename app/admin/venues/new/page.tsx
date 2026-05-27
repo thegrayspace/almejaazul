@@ -1,6 +1,8 @@
-import { requireAdminSession } from '@/lib/auth';
+﻿import { requireAdminSession } from '@/lib/auth';
 import AdminShell from '@/components/admin/AdminShell';
 import VenueForm from '@/components/admin/VenueForm';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = { title: 'New Venue' };
 

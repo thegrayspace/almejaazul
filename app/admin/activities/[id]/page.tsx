@@ -3,6 +3,8 @@ import { prisma } from '@/lib/db';
 import AdminShell from '@/components/admin/AdminShell';
 import ActivityForm from '@/components/admin/ActivityForm';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = { title: 'Edit Activity' };
 
 interface Props { params: Promise<{ id: string }>; }
