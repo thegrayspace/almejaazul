@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import { getIronSession } from 'iron-session';
 import { cookies } from 'next/headers';
 import { SESSION_OPTIONS, SessionData } from '@/lib/auth';
@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
 
   const parsed = FAQCreateSchema.safeParse(body);
   if (!parsed.success) {
-    return NextResponse.json({ error: 'Validation failed', details: parsed.error.flatten() }, { status: 422 });
+    return NextResponse.json({ error: "Validation failed: " + Object.keys(parsed.error.flatten().fieldErrors).join(', ') || 'Validation failed', details: parsed.error.flatten() }, { status: 422 });
   }
 
   const faq = await prisma.fAQ.create({
@@ -57,3 +57,4 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json(faq, { status: 201 });
 }
+

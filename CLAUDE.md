@@ -87,6 +87,15 @@ styles/pages/          Per-page CSS files
 - [x] Rooms CRUD (`/admin/rooms`)
 - [x] FAQs CRUD (`/admin/faqs`)
 - [x] Inquiries list + status update (`/admin/inquiries`)
+- [x] Spaces CRUD (`/admin/spaces`) — BookableSpace administration
+- [x] Day Passes CRUD (`/admin/day-passes`) — DayPass pricing administration
+- [x] Add-Ons CRUD (`/admin/addons`) — AddOn upsells administration
+- [x] Activities CRUD (`/admin/activities`) — Activity listings administration
+- [x] Tours CRUD (`/admin/tours`) — Tour excursions administration
+- [x] Event Packages CRUD (`/admin/packages`) — EventPackage corporate/retreat packages administration
+- [x] Venues CRUD (`/admin/venues`) — Venue floor plans/details administration
+- [x] Media Manager (`/admin/media`) — MediaAsset library + local upload form
+- [x] Site Settings Editor (`/admin/settings`) — SiteSettings editor form
 
 ### Infrastructure
 - [x] Prisma schema + migration (run locally)
@@ -97,25 +106,10 @@ styles/pages/          Per-page CSS files
 
 ---
 
-## What's NOT Built Yet (Admin stubs — 404 on click)
-The dashboard nav links to these pages but they don't exist yet:
-- `/admin/spaces` — BookableSpace CRUD
-- `/admin/day-passes` — DayPass CRUD
-- `/admin/addons` — AddOn CRUD
-- `/admin/activities` — Activity CRUD
-- `/admin/tours` — Tour CRUD
-- `/admin/packages` — EventPackage CRUD
-- `/admin/venues` — Venue CRUD
-- `/admin/media` — MediaAsset library + upload
-- `/admin/settings` — SiteSettings editor
-
----
-
 ## Known Issues
-1. **Admin dashboard 404s** — 9 nav items link to unbuilt pages (see above)
-2. **`/build` page 404s** — `app/(public)/build/page.tsx` exists but the route isn't resolving; needs investigation
-3. **Neon connection drop warnings** in dev console — `prisma:error Error in PostgreSQL connection: Error { kind: Closed }` — harmless, Neon drops idle connections on free tier
-4. **Hydration warning** in browser — caused by ClickUp Chrome extension injecting a class on `<body>`, not a code issue
+1. **`/build` page 404s** — `app/(public)/build/page.tsx` exists but the route isn't resolving; needs investigation
+2. **Neon connection drop warnings** in dev console — `prisma:error Error in PostgreSQL connection: Error { kind: Closed }` — harmless, Neon drops idle connections on free tier
+3. **Hydration warning** in browser — caused by ClickUp Chrome extension injecting a class on `<body>`, not a code issue
 
 ## Local Schema Fix Needed
 The VS Code session added `connection_limit = 1` to `prisma/schema.prisma` locally but it's invalid in Prisma v6.

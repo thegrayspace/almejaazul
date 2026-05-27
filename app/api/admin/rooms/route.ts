@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import { getIronSession } from 'iron-session';
 import { cookies } from 'next/headers';
 import { SESSION_OPTIONS, SessionData } from '@/lib/auth';
@@ -14,7 +14,7 @@ async function requireAdmin() {
 
 const RoomCreateSchema = z.object({
   name: z.string().min(1).max(200),
-  tag: z.string().min(1).max(200),
+  tag: z.string().max(200).optional().default(''),
   subtitle: z.string().max(300).optional().default(''),
   capacity: z.string().max(100).optional().default(''),
   basePrice: z.number().min(0).optional().default(0),
@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
 
   const parsed = RoomCreateSchema.safeParse(body);
   if (!parsed.success) {
-    return NextResponse.json({ error: 'Validation failed', details: parsed.error.flatten() }, { status: 422 });
+    return NextResponse.json({ error: "Validation failed: " + Object.keys(parsed.error.flatten().fieldErrors).join(', ') || 'Validation failed', details: parsed.error.flatten() }, { status: 422 });
   }
 
   const data = parsed.data;
@@ -100,3 +100,4 @@ export async function POST(req: NextRequest) {
     basePrice: room.basePrice.toNumber(),
   }, { status: 201 });
 }
+

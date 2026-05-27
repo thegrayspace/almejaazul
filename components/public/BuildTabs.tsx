@@ -5,9 +5,30 @@ import { IconPhone } from '@/components/icons';
 import { useInquiry } from './InquiryModal';
 import Link from 'next/link';
 
+// ── TYPES ─────────────────────────────────────────────────
+
+export interface PackageItem {
+  name: string;
+  includes: string;
+  price: string;
+  img: string;
+  detail: string;
+  minPax: number;
+  maxPax: number;
+  duration: string[];
+  features: string[];
+}
+
+export interface VenueItem {
+  tag: string;
+  name: string;
+  sub: string;
+  img: string;
+}
+
 // ── DATA ──────────────────────────────────────────────────
 
-const PACKAGES = [
+const DEFAULT_PACKAGES: PackageItem[] = [
   {
     name: 'The Day Retreat',
     includes: 'Function Hall (full day) · Meeting Room · All recreation courts · Beach & pool access · WiFi · 2 meals',
@@ -40,7 +61,7 @@ const PACKAGES = [
   },
 ];
 
-const WED_VENUES = [
+const DEFAULT_WED_VENUES: VenueItem[] = [
   { tag: 'Ceremony', name: 'Vow by the Sea', sub: 'Beachfront · Up to 80 guests · Sunset facing', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=85' },
   { tag: 'Reception', name: 'The Mangrove Pavilion', sub: 'Canopy setting · Up to 60 guests · Intimate', img: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=900&q=85' },
 ];
@@ -109,7 +130,7 @@ const pillStyle = (on: boolean): React.CSSProperties => ({
 const fieldLabel: React.CSSProperties = { fontSize: 10, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(26,37,48,0.45)', display: 'block', marginBottom: 7 };
 const fieldInput: React.CSSProperties = { width: '100%', padding: '10px 14px', background: 'var(--c-sand)', border: '1px solid rgba(26,37,48,0.12)', borderRadius: 6, fontFamily: 'var(--ff-n)', fontSize: 14, color: 'var(--c-ink)', outline: 'none', boxSizing: 'border-box' };
 
-function PackageModal({ pkg, onClose }: { pkg: typeof PACKAGES[0]; onClose: () => void }) {
+function PackageModal({ pkg, onClose }: { pkg: PackageItem; onClose: () => void }) {
   const [on, setOn] = useState(false);
   const [pax, setPax] = useState('');
   const [dur, setDur] = useState('');
@@ -190,8 +211,8 @@ function PackageModal({ pkg, onClose }: { pkg: typeof PACKAGES[0]; onClose: () =
 
 // ── CORPORATE TAB ─────────────────────────────────────────
 
-function CorporateTab() {
-  const [activePkg, setActivePkg] = useState<typeof PACKAGES[0] | null>(null);
+function CorporateTab({ packages }: { packages: PackageItem[] }) {
+  const [activePkg, setActivePkg] = useState<PackageItem | null>(null);
 
   return (
     <section className="corp-section" id="corporate">
@@ -207,7 +228,7 @@ function CorporateTab() {
             Meeting Room for 20. Five hectares for everything else.
           </p>
           <div className="corp-packages">
-            {PACKAGES.map(p => (
+            {packages.map(p => (
               <div key={p.name} className="pkg-card" style={{ cursor: 'pointer' }} onClick={() => setActivePkg(p)}>
                 <h3 className="pkg-name">{p.name}</h3>
                 <p className="pkg-includes">{p.includes}</p>
@@ -238,7 +259,7 @@ function CorporateTab() {
 
 // ── WEDDINGS TAB ──────────────────────────────────────────
 
-function WeddingsTab() {
+function WeddingsTab({ venues }: { venues: VenueItem[] }) {
   const WED_FEATURES = ['Beach ceremony setup', 'Mangrove Pavilion reception', 'In-house coordination', 'Accommodation for wedding party', 'Catering coordination', 'Floral & décor support available', 'Bangka arrival experience', 'Private beach access'];
 
   return (
@@ -275,7 +296,7 @@ function WeddingsTab() {
         <p className="s-eyebrow">Our Venues</p>
         <h2 className="s-title" style={{ marginBottom: 32 }}>Two <em>Spaces</em></h2>
         <div className="wed-venue-grid">
-          {WED_VENUES.map(v => (
+          {venues.map(v => (
             <div key={v.name} className="wed-venue">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={v.img} alt={v.name} loading="lazy" />
@@ -396,8 +417,10 @@ function InquirySection() {
 
 type Tab = 'corporate' | 'weddings' | 'floorplans';
 
-export default function BuildTabs({ initialTab = 'corporate' }: { initialTab?: Tab }) {
+export default function BuildTabs({ initialTab = 'corporate', packages: dbPackages, venues: dbVenues }: { initialTab?: Tab; packages?: PackageItem[]; venues?: VenueItem[] }) {
   const [tab, setTab] = useState<Tab>(initialTab);
+  const packages = (dbPackages && dbPackages.length > 0) ? dbPackages : DEFAULT_PACKAGES;
+  const venues = (dbVenues && dbVenues.length > 0) ? dbVenues : DEFAULT_WED_VENUES;
 
   return (
     <>
@@ -413,8 +436,8 @@ export default function BuildTabs({ initialTab = 'corporate' }: { initialTab?: T
         </button>
       </div>
 
-      {tab === 'corporate' && <CorporateTab />}
-      {tab === 'weddings' && <WeddingsTab />}
+      {tab === 'corporate' && <CorporateTab packages={packages} />}
+      {tab === 'weddings' && <WeddingsTab venues={venues} />}
       {tab === 'floorplans' && <FloorPlansTab />}
 
       <InquirySection />

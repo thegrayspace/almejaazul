@@ -57,7 +57,7 @@ export async function PATCH(req: NextRequest, { params }: RouteContext) {
 
   const parsed = FAQUpdateSchema.safeParse(body);
   if (!parsed.success) {
-    return NextResponse.json({ error: 'Validation failed', details: parsed.error.flatten() }, { status: 422 });
+    return NextResponse.json({ error: "Validation failed: " + Object.keys(parsed.error.flatten().fieldErrors).join(', ') || 'Validation failed', details: parsed.error.flatten() }, { status: 422 });
   }
 
   const existing = await prisma.fAQ.findUnique({ where: { id } });

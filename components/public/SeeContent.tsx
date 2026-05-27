@@ -3,13 +3,24 @@
 import { useState, useEffect } from 'react';
 import { useInquiry } from './InquiryModal';
 
-const TOURS = [
-  { id: 1, tag: 'Island Experience', name: 'Samal Island Tour', desc: 'The full picture of Samal — caves, white sand coves, mangrove boardwalks, and local fishing villages. A guided full-day circuit of what makes the island worth the crossing.', price: 'Inquire for rates', img: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=700&q=80', duration: 'Full Day', mImg: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1200&q=90' },
-  { id: 2, tag: 'Aquatic Experience', name: 'Reef & Snorkel Tour', desc: 'Guided snorkeling over the reefs of Samal. Equipment included. Multiple reef sites, species briefing, and a surface guide throughout.', price: '₱500/person', img: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=700&q=80', duration: 'Half Day', mImg: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=1200&q=90' },
-  { id: 3, tag: 'Sunrise Experience', name: 'Mangrove Kayak at Dawn', desc: "A guided kayak through the resort's mangrove sanctuary at first light. One of the quieter, more unforgettable ways to experience Samal — nature at its most undisturbed.", price: 'Inquire for rates', img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=700&q=80', duration: '2–3 Hours', mImg: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=90' },
-  { id: 4, tag: 'Cultural Experience', name: 'Davao City Day Tour', desc: "From the resort, cross back to Davao City for a curated circuit of the city's best: local markets, Durian experience, cultural landmarks, and street food.", price: 'Inquire for rates', img: 'https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?w=700&q=80', duration: 'Full Day', mImg: 'https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?w=1200&q=90' },
-  { id: 5, tag: 'Overnight Experience', name: 'Talicud Island Overnight', desc: 'Ferry across to Talicud — a smaller, quieter island off Samal with powdery white sand, minimal infrastructure, and maximum disconnect. Camping and simple beach accommodations.', price: 'Inquire for rates', img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=700&q=80', duration: 'Overnight', mImg: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=90' },
-  { id: 6, tag: 'Aerial Experience', name: 'Samal from Above', desc: 'Book a helicopter or light aircraft tour over Samal and the Davao Gulf — seeing the island, its coastlines, the nearby islands, and the city from altitude. Bookable on request.', price: 'Inquire for rates', img: 'https://images.unsplash.com/photo-1474540412665-1cdae210ae6b?w=700&q=80', duration: '45 – 90 Min', mImg: 'https://images.unsplash.com/photo-1474540412665-1cdae210ae6b?w=1200&q=90' },
+export interface TourItem {
+  id: string;
+  tag: string;
+  name: string;
+  desc: string;
+  price: string;
+  img: string;
+  duration: string;
+  mImg: string;
+}
+
+const DEFAULT_TOURS: TourItem[] = [
+  { id: '1', tag: 'Island Experience', name: 'Samal Island Tour', desc: 'The full picture of Samal — caves, white sand coves, mangrove boardwalks, and local fishing villages. A guided full-day circuit of what makes the island worth the crossing.', price: 'Inquire for rates', img: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=700&q=80', duration: 'Full Day', mImg: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1200&q=90' },
+  { id: '2', tag: 'Aquatic Experience', name: 'Reef & Snorkel Tour', desc: 'Guided snorkeling over the reefs of Samal. Equipment included. Multiple reef sites, species briefing, and a surface guide throughout.', price: '₱500/person', img: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=700&q=80', duration: 'Half Day', mImg: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=1200&q=90' },
+  { id: '3', tag: 'Sunrise Experience', name: 'Mangrove Kayak at Dawn', desc: "A guided kayak through the resort's mangrove sanctuary at first light. One of the quieter, more unforgettable ways to experience Samal — nature at its most undisturbed.", price: 'Inquire for rates', img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=700&q=80', duration: '2–3 Hours', mImg: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=90' },
+  { id: '4', tag: 'Cultural Experience', name: 'Davao City Day Tour', desc: "From the resort, cross back to Davao City for a curated circuit of the city's best: local markets, Durian experience, cultural landmarks, and street food.", price: 'Inquire for rates', img: 'https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?w=700&q=80', duration: 'Full Day', mImg: 'https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?w=1200&q=90' },
+  { id: '5', tag: 'Overnight Experience', name: 'Talicud Island Overnight', desc: 'Ferry across to Talicud — a smaller, quieter island off Samal with powdery white sand, minimal infrastructure, and maximum disconnect. Camping and simple beach accommodations.', price: 'Inquire for rates', img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=700&q=80', duration: 'Overnight', mImg: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=90' },
+  { id: '6', tag: 'Aerial Experience', name: 'Samal from Above', desc: 'Book a helicopter or light aircraft tour over Samal and the Davao Gulf — seeing the island, its coastlines, the nearby islands, and the city from altitude. Bookable on request.', price: 'Inquire for rates', img: 'https://images.unsplash.com/photo-1474540412665-1cdae210ae6b?w=700&q=80', duration: '45 – 90 Min', mImg: 'https://images.unsplash.com/photo-1474540412665-1cdae210ae6b?w=1200&q=90' },
 ];
 
 const NATURE_SPOTS = [
@@ -19,16 +30,7 @@ const NATURE_SPOTS = [
   { tag: 'Coast', name: 'Kaputian Beach', desc: "Samal's longest stretch of sand — a 20-minute drive from the resort. Good for sunset walks and open-water swimming.", img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=400&q=80' },
 ];
 
-interface Tour {
-  id: number;
-  tag: string;
-  name: string;
-  desc: string;
-  price: string;
-  img: string;
-  duration: string;
-  mImg: string;
-}
+type Tour = TourItem;
 
 function TourModal({ tour, onClose }: { tour: Tour; onClose: () => void }) {
   const [on, setOn] = useState(false);
@@ -86,7 +88,8 @@ function TourModal({ tour, onClose }: { tour: Tour; onClose: () => void }) {
   );
 }
 
-export default function SeeContent() {
+export default function SeeContent({ tours: dbTours }: { tours?: TourItem[] }) {
+  const TOURS = (dbTours && dbTours.length > 0) ? dbTours : DEFAULT_TOURS;
   const [selected, setSelected] = useState<Tour | null>(null);
   const { open } = useInquiry();
 

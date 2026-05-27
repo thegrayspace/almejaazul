@@ -19,9 +19,30 @@ import {
   IconSunset,
 } from '@/components/icons';
 
+// ── Types ─────────────────────────────────────────────────────────────────────
+
+export interface PassItem {
+  key: string;
+  name: string;
+  iconName: string;
+  tag: string;
+  img: string;
+  pricing: { label: string; price: string; note: string }[];
+  includes: string[];
+  note: string;
+  unit: string;
+}
+
+export interface AddOnItem {
+  name: string;
+  icon: string;
+  price: string;
+  desc: string;
+}
+
 // ── Data ──────────────────────────────────────────────────────────────────────
 
-const PASS_DATA = [
+const DEFAULT_PASSES: PassItem[] = [
   {
     key: 'seaside',
     name: 'Seaside Day Pass',
@@ -87,17 +108,17 @@ const PASS_DATA = [
   },
 ];
 
-type PassData = (typeof PASS_DATA)[number];
+type PassData = PassItem;
 
-const ADDONS = [
-  { Icon: IconSnorkel, name: 'Snorkeling', price: 'Equipment: ₱200', desc: 'Reef access off both beach fronts. Equipment rental at the water sports desk.' },
-  { Icon: IconJetSki, name: 'Jet Ski', price: 'Inquire on-site', desc: 'Open water jet skiing on the Davao Gulf. Safety briefing included. Lifeguard on duty.' },
-  { Icon: IconBananaBoat, name: 'Banana Boat', price: '₱300/ride', desc: 'Up to 8 riders. The most fun you will have with strangers. Lifeguard on duty.' },
-  { Icon: IconKayak, name: 'Kayaking', price: 'On request', desc: 'Single and double kayaks. Paddle the mangrove edge or along the coast.' },
-  { Icon: IconPickleball, name: 'Pickleball', price: '+₱150/session', desc: 'Three full courts available for day guests. Equipment provided. Book at the desk.' },
-  { Icon: IconDining, name: 'Restaurant', price: 'À la carte', desc: 'Filipino classics and fresh seafood on-site. Open to all day guests throughout the day.' },
-  { Icon: IconWifi, name: 'High-Speed WiFi', price: 'Complimentary', desc: 'Fiber internet across all resort areas including beach. Work remotely from paradise.' },
-  { Icon: IconPaw, name: 'Pet-Friendly', price: 'Always', desc: 'Bring your pets. They are welcome on the beach and common grounds.' },
+const DEFAULT_ADDONS: AddOnItem[] = [
+  { name: 'Snorkeling', icon: 'snorkel', price: 'Equipment: ₱200', desc: 'Reef access off both beach fronts. Equipment rental at the water sports desk.' },
+  { name: 'Jet Ski', icon: 'jet-ski', price: 'Inquire on-site', desc: 'Open water jet skiing on the Davao Gulf. Safety briefing included. Lifeguard on duty.' },
+  { name: 'Banana Boat', icon: 'banana-boat', price: '₱300/ride', desc: 'Up to 8 riders. The most fun you will have with strangers. Lifeguard on duty.' },
+  { name: 'Kayaking', icon: 'kayak', price: 'On request', desc: 'Single and double kayaks. Paddle the mangrove edge or along the coast.' },
+  { name: 'Pickleball', icon: 'pickleball', price: '+₱150/session', desc: 'Three full courts available for day guests. Equipment provided. Book at the desk.' },
+  { name: 'Restaurant', icon: 'dining', price: 'À la carte', desc: 'Filipino classics and fresh seafood on-site. Open to all day guests throughout the day.' },
+  { name: 'High-Speed WiFi', icon: 'wifi', price: 'Complimentary', desc: 'Fiber internet across all resort areas including beach. Work remotely from paradise.' },
+  { name: 'Pet-Friendly', icon: 'paw', price: 'Always', desc: 'Bring your pets. They are welcome on the beach and common grounds.' },
 ];
 
 const TIMELINE = [
@@ -243,9 +264,26 @@ function FAQAccordion({ faqs }: { faqs: typeof FAQS }) {
   );
 }
 
+// ── Icon lookup for add-ons ───────────────────────────────────────────────────
+
+function AddOnIcon({ name, size }: { name: string; size?: number }) {
+  const s = size ?? 24;
+  if (name === 'snorkel') return <IconSnorkel size={s} />;
+  if (name === 'jet-ski') return <IconJetSki size={s} />;
+  if (name === 'banana-boat') return <IconBananaBoat size={s} />;
+  if (name === 'kayak') return <IconKayak size={s} />;
+  if (name === 'pickleball') return <IconPickleball size={s} />;
+  if (name === 'dining') return <IconDining size={s} />;
+  if (name === 'wifi') return <IconWifi size={s} />;
+  if (name === 'paw') return <IconPaw size={s} />;
+  return null;
+}
+
 // ── DayTourContent ────────────────────────────────────────────────────────────
 
-export default function DayTourContent() {
+export default function DayTourContent({ passes: dbPasses, addons: dbAddons }: { passes?: PassItem[]; addons?: AddOnItem[] }) {
+  const PASS_DATA = (dbPasses && dbPasses.length > 0) ? dbPasses : DEFAULT_PASSES;
+  const ADDONS = (dbAddons && dbAddons.length > 0) ? dbAddons : DEFAULT_ADDONS;
   const [activePass, setActivePass] = useState<PassData | null>(null);
 
   return (
@@ -330,14 +368,14 @@ export default function DayTourContent() {
         <h2 className="s-title">More to <em>do.</em></h2>
 
         <div className="addons-grid">
-          {ADDONS.map(({ Icon, name, price, desc }) => (
-            <div key={name} className="addon-tile">
+          {ADDONS.map((addon) => (
+            <div key={addon.name} className="addon-tile">
               <div className="addon-icon">
-                <Icon size={24} />
+                <AddOnIcon name={addon.icon} size={24} />
               </div>
-              <div className="addon-name">{name}</div>
-              <div className="addon-price">{price}</div>
-              <p className="addon-desc">{desc}</p>
+              <div className="addon-name">{addon.name}</div>
+              <div className="addon-price">{addon.price}</div>
+              <p className="addon-desc">{addon.desc}</p>
             </div>
           ))}
         </div>

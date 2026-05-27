@@ -10,14 +10,24 @@ import {
   IconDining,
 } from '@/components/icons';
 
-const SPORTS = [
-  { id: 1, cat: 'Water Sport', name: 'Banana Boat', sub: 'Davao Gulf thrills — up to 8 riders', img: 'https://images.unsplash.com/photo-1530053969600-caed2596d242?w=700&q=80', pill: '₱300/ride', status: 'active' },
-  { id: 2, cat: 'Water Sport', name: 'Jet Ski', sub: 'Open water on the Davao Gulf', img: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=700&q=80', pill: 'Inquire', status: 'active' },
-  { id: 3, cat: 'Court Sport', name: 'Pickleball', sub: '3 courts · Equipment provided', img: 'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=700&q=80', pill: '+₱150/session', status: 'active' },
-  { id: 4, cat: 'Water Activity', name: 'Snorkeling', sub: 'Reef access · Equipment for rent', img: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=700&q=80', pill: '₱200', status: 'active' },
-  { id: 5, cat: 'Water Activity', name: 'Kayaking', sub: 'Mangrove edge & coastline', img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=700&q=80', pill: 'On Request', status: 'active' },
-  { id: 6, cat: 'Coming Soon', name: 'Paddleboard', sub: 'Calm water sessions', img: 'https://images.unsplash.com/photo-1520390138845-fd2d229dd553?w=700&q=80', pill: 'On Request', status: 'request' },
-  { id: 7, cat: 'Coming Soon', name: 'Beach Volleyball', sub: 'Full court · Team play', img: 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=700&q=80', pill: 'Coming Soon', status: 'request' },
+export interface ActivityItem {
+  id: string;
+  cat: string;
+  name: string;
+  sub: string;
+  img: string;
+  pill: string;
+  status: 'active' | 'request';
+}
+
+const DEFAULT_SPORTS: ActivityItem[] = [
+  { id: '1', cat: 'Water Sport', name: 'Banana Boat', sub: 'Davao Gulf thrills — up to 8 riders', img: 'https://images.unsplash.com/photo-1530053969600-caed2596d242?w=700&q=80', pill: '₱300/ride', status: 'active' },
+  { id: '2', cat: 'Water Sport', name: 'Jet Ski', sub: 'Open water on the Davao Gulf', img: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=700&q=80', pill: 'Inquire', status: 'active' },
+  { id: '3', cat: 'Court Sport', name: 'Pickleball', sub: '3 courts · Equipment provided', img: 'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=700&q=80', pill: '+₱150/session', status: 'active' },
+  { id: '4', cat: 'Water Activity', name: 'Snorkeling', sub: 'Reef access · Equipment for rent', img: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=700&q=80', pill: '₱200', status: 'active' },
+  { id: '5', cat: 'Water Activity', name: 'Kayaking', sub: 'Mangrove edge & coastline', img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=700&q=80', pill: 'On Request', status: 'active' },
+  { id: '6', cat: 'Coming Soon', name: 'Paddleboard', sub: 'Calm water sessions', img: 'https://images.unsplash.com/photo-1520390138845-fd2d229dd553?w=700&q=80', pill: 'On Request', status: 'request' },
+  { id: '7', cat: 'Coming Soon', name: 'Beach Volleyball', sub: 'Full court · Team play', img: 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=700&q=80', pill: 'Coming Soon', status: 'request' },
 ];
 
 const WATER = [
@@ -33,7 +43,9 @@ const LEISURE = [
   { Icon: IconDining, name: 'Beach Restaurant', desc: 'Filipino classics and fresh seafood, right on the sand. Open to day guests.', avail: 'Open Daily' },
 ];
 
-export default function FunContent() {
+export default function FunContent({ activities: dbActivities }: { activities?: ActivityItem[] }) {
+  const SPORTS = (dbActivities && dbActivities.length > 0) ? dbActivities : DEFAULT_SPORTS;
+
   return (
     <>
       {/* SPORTS SECTION */}

@@ -6,7 +6,7 @@
  * Idempotent: clears and re-creates all seeded records.
  */
 
-import { PrismaClient, PriceMode } from '@prisma/client';
+import { PrismaClient, PriceMode, ActivityCategory, FloorPlanType } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
@@ -259,9 +259,9 @@ async function main() {
       priceSuffix: '/person',
       priceMode: PriceMode.NUMERIC,
       pricingJson: [
-        { label: '1 Hour', price: 80 },
-        { label: 'Half Day', price: 150 },
-        { label: 'Full Day', price: 200 },
+        { label: '1 Hour', price: '₱80', note: 'min. 2 hrs' },
+        { label: 'Half Day', price: '₱150', note: 'up to 6 hrs' },
+        { label: 'Full Day', price: '₱200', note: 'dawn to dusk' },
       ],
       includesJson: ['Both beach fronts', 'Shoreline lounge areas', 'Restroom facilities', 'High-speed WiFi', 'Open daily · Dawn to dusk'],
       note: 'Pets welcome. Walk-ins always accepted. Add pool for ₱100 more.',
@@ -276,9 +276,9 @@ async function main() {
       priceSuffix: '/person',
       priceMode: PriceMode.NUMERIC,
       pricingJson: [
-        { label: '1 Hour', price: 120 },
-        { label: 'Half Day', price: 200 },
-        { label: 'Full Day', price: 300 },
+        { label: '1 Hour', price: '₱120', note: 'min. 2 hrs' },
+        { label: 'Half Day', price: '₱200', note: 'up to 6 hrs' },
+        { label: 'Full Day', price: '₱300', note: 'dawn to dusk' },
       ],
       includesJson: ['Both beach fronts', 'Infinity pool access', 'Lounge chairs at pool', 'Restroom & shower', 'High-speed WiFi'],
       note: 'Most popular for groups and families.',
@@ -293,9 +293,9 @@ async function main() {
       priceSuffix: '/cottage',
       priceMode: PriceMode.NUMERIC,
       pricingJson: [
-        { label: '1 Hour', price: 100 },
-        { label: 'Half Day', price: 200 },
-        { label: 'Full Day', price: 300 },
+        { label: '1 Hour', price: '₱100', note: 'min. 2 hrs' },
+        { label: 'Half Day', price: '₱200', note: 'up to 6 hrs' },
+        { label: 'Full Day', price: '₱300', note: 'dawn to dusk' },
       ],
       includesJson: ['Shaded beachside cottage', 'Table & seating for group', 'Power outlet', 'Cooler storage', 'Full or part-day'],
       note: 'Add any beach pass on top. Best for families and groups.',
@@ -340,6 +340,264 @@ async function main() {
     await prisma.fAQ.create({ data: { ...f, isPublished: true } });
   }
   console.log(`  ✓ ${faqs.length} FAQs`);
+
+  // ── Add-ons ─────────────────────────────────────────────
+  await prisma.addOn.deleteMany();
+  const addons = [
+    { name: 'Snorkeling Equipment', icon: 'snorkel', price: 200, priceMode: PriceMode.NUMERIC, description: 'Full snorkel set rental — mask, fins, and vest. Multiple reef sites accessible from both beach fronts.', category: 'water-sports', sortOrder: 0 },
+    { name: 'Jet Ski', icon: 'jetski', price: 0, priceMode: PriceMode.INQUIRE, description: 'Open-water jet ski on the Davao Gulf. Rates vary by session length. Inquire at the water sports desk.', category: 'water-sports', sortOrder: 1 },
+    { name: 'Banana Boat', icon: 'bananaboat', price: 300, priceMode: PriceMode.NUMERIC, description: 'Up to 8 riders per run. The loudest fun on the property. Lifeguard on duty.', category: 'water-sports', sortOrder: 2 },
+    { name: 'Kayak', icon: 'kayak', price: 0, priceMode: PriceMode.ON_REQUEST, description: 'Single and double kayaks available. Paddle the mangrove edge or explore the coastline at your pace.', category: 'water-sports', sortOrder: 3 },
+    { name: 'Pickleball Session', icon: 'pickleball', price: 150, priceMode: PriceMode.NUMERIC, description: '3 full courts with equipment provided. Drop-in play or arrange a match. Clinics available on request.', category: 'land-sports', sortOrder: 4 },
+    { name: 'Dining Package', icon: 'dining', price: 0, priceMode: PriceMode.INQUIRE, description: 'Pre-arranged meal sets for groups — Filipino classics, fresh seafood, and BBQ on the beach. Inquire for menus and rates.', category: 'dining', sortOrder: 5 },
+  ];
+
+  for (const a of addons) {
+    await prisma.addOn.create({
+      data: {
+        name: a.name,
+        icon: a.icon,
+        price: a.price,
+        priceMode: a.priceMode,
+        customPriceText: '',
+        description: a.description,
+        category: a.category,
+        isPublished: true,
+        sortOrder: a.sortOrder,
+      },
+    });
+  }
+  console.log(`  ✓ ${addons.length} add-ons`);
+
+  // ── Activities ──────────────────────────────────────────
+  await prisma.activity.deleteMany();
+  const activities = [
+    { category: ActivityCategory.WATER_SPORT, name: 'Banana Boat', subtitle: 'Davao Gulf thrills — up to 8 riders', price: 300, priceMode: PriceMode.NUMERIC, imageUrl: 'https://images.unsplash.com/photo-1530053969600-caed2596d242?w=700&q=80', sortOrder: 0 },
+    { category: ActivityCategory.WATER_SPORT, name: 'Jet Ski', subtitle: 'Open water on the Davao Gulf', price: 0, priceMode: PriceMode.INQUIRE, imageUrl: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=700&q=80', sortOrder: 1 },
+    { category: ActivityCategory.COURT_SPORT, name: 'Pickleball', subtitle: '3 courts · Equipment provided', price: 150, priceMode: PriceMode.NUMERIC, imageUrl: 'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=700&q=80', sortOrder: 2 },
+    { category: ActivityCategory.WATER_SPORT, name: 'Snorkeling', subtitle: 'Reef access · Equipment for rent', price: 200, priceMode: PriceMode.NUMERIC, imageUrl: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=700&q=80', sortOrder: 3 },
+    { category: ActivityCategory.WATER_SPORT, name: 'Kayaking', subtitle: 'Mangrove edge & coastline', price: 0, priceMode: PriceMode.ON_REQUEST, imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=700&q=80', sortOrder: 4 },
+    { category: ActivityCategory.WATER_SPORT, name: 'Paddleboard', subtitle: 'Calm water sessions', price: 0, priceMode: PriceMode.ON_REQUEST, imageUrl: 'https://images.unsplash.com/photo-1520390138845-fd2d229dd553?w=700&q=80', isPlaceholder: true, sortOrder: 5 },
+    { category: ActivityCategory.BEACH_SPORT, name: 'Beach Volleyball', subtitle: 'Full court · Team play', price: 0, priceMode: PriceMode.NUMERIC, imageUrl: 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=700&q=80', isPlaceholder: true, sortOrder: 6 },
+  ];
+
+  for (const a of activities) {
+    await prisma.activity.create({
+      data: {
+        category: a.category,
+        name: a.name,
+        subtitle: a.subtitle,
+        price: a.price,
+        priceMode: a.priceMode,
+        imageUrl: a.imageUrl,
+        isPlaceholder: a.isPlaceholder ?? false,
+        isPublished: true,
+        sortOrder: a.sortOrder,
+      },
+    });
+  }
+  console.log(`  ✓ ${activities.length} activities`);
+
+  // ── Tours ───────────────────────────────────────────────
+  await prisma.tour.deleteMany();
+  const tours = [
+    {
+      tag: 'Island Experience', name: 'Samal Island Tour',
+      shortDescription: 'The full picture of Samal — caves, white sand coves, mangrove boardwalks, and local fishing villages.',
+      detail: 'A guided full-day circuit of what makes Samal worth the crossing. Caves, white sand coves, mangrove boardwalks, and local fishing villages — this is the island as it actually is, not just the beach in front of the resort.',
+      price: 0, priceMode: PriceMode.INQUIRE, duration: 'Full Day',
+      imageUrl: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=700&q=80',
+      modalImageUrl: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1200&q=90',
+      sortOrder: 0,
+    },
+    {
+      tag: 'Aquatic Experience', name: 'Reef & Snorkel Tour',
+      shortDescription: 'Guided snorkeling over the reefs of Samal. Equipment included. Multiple reef sites.',
+      detail: 'Guided snorkeling over the reefs of Samal Island. Equipment included. Multiple reef sites, species briefing, and a surface guide throughout the session.',
+      price: 500, priceMode: PriceMode.NUMERIC, duration: 'Half Day',
+      imageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=700&q=80',
+      modalImageUrl: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=1200&q=90',
+      sortOrder: 1,
+    },
+    {
+      tag: 'Sunrise Experience', name: 'Mangrove Kayak at Dawn',
+      shortDescription: "A guided kayak through the resort's mangrove sanctuary at first light.",
+      detail: "A guided kayak through the resort's mangrove sanctuary at first light. One of the quieter, more unforgettable ways to experience Samal — nature at its most undisturbed.",
+      price: 0, priceMode: PriceMode.INQUIRE, duration: '2–3 Hours',
+      imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=700&q=80',
+      modalImageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=90',
+      sortOrder: 2,
+    },
+    {
+      tag: 'Cultural Experience', name: 'Davao City Day Tour',
+      shortDescription: "Curated circuit of Davao City — local markets, Durian experience, cultural landmarks, and street food.",
+      detail: "From the resort, cross back to Davao City for a curated circuit of the city's best: local markets, Durian experience, cultural landmarks, and street food. A full-day guided tour that rounds out the Samal stay.",
+      price: 0, priceMode: PriceMode.INQUIRE, duration: 'Full Day',
+      imageUrl: 'https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?w=700&q=80',
+      modalImageUrl: 'https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?w=1200&q=90',
+      sortOrder: 3,
+    },
+    {
+      tag: 'Overnight Experience', name: 'Talicud Island Overnight',
+      shortDescription: 'Ferry across to Talicud — a smaller, quieter island with powdery white sand and maximum disconnect.',
+      detail: 'Ferry across to Talicud — a smaller, quieter island off Samal with powdery white sand, minimal infrastructure, and maximum disconnect. Camping and simple beach accommodations. Best booked 3+ days in advance.',
+      price: 0, priceMode: PriceMode.INQUIRE, duration: 'Overnight',
+      imageUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=700&q=80',
+      modalImageUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=90',
+      sortOrder: 4,
+    },
+    {
+      tag: 'Aerial Experience', name: 'Samal from Above',
+      shortDescription: 'Helicopter or light aircraft tour over Samal and the Davao Gulf. Bookable on request.',
+      detail: 'Book a helicopter or light aircraft tour over Samal and the Davao Gulf — seeing the island, its coastlines, the nearby islands, and the city from altitude. Available on request, subject to aircraft availability.',
+      price: 0, priceMode: PriceMode.INQUIRE, duration: '45 – 90 Min',
+      imageUrl: 'https://images.unsplash.com/photo-1474540412665-1cdae210ae6b?w=700&q=80',
+      modalImageUrl: 'https://images.unsplash.com/photo-1474540412665-1cdae210ae6b?w=1200&q=90',
+      sortOrder: 5,
+    },
+  ];
+
+  for (const t of tours) {
+    await prisma.tour.create({
+      data: {
+        tag: t.tag,
+        name: t.name,
+        shortDescription: t.shortDescription,
+        detail: t.detail,
+        price: t.price,
+        priceMode: t.priceMode,
+        duration: t.duration,
+        imageUrl: t.imageUrl,
+        modalImageUrl: t.modalImageUrl,
+        isPublished: true,
+        sortOrder: t.sortOrder,
+      },
+    });
+  }
+  console.log(`  ✓ ${tours.length} tours`);
+
+  // ── Event Packages ──────────────────────────────────────
+  await prisma.eventPackage.deleteMany();
+  const packages = [
+    {
+      type: 'corporate', name: 'The Day Retreat',
+      includesText: 'Function Hall (full day) · Meeting Room · All recreation courts · Beach & pool access · WiFi · 2 meals',
+      price: 0, priceMode: PriceMode.INQUIRE,
+      description: 'A complete corporate day — structured morning sessions in the Function Hall, breakout rooms, then the beach and recreation courts open for the afternoon. Two meals included. Built for productive teams.',
+      imageUrl: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=700&q=80',
+      minPax: 20, maxPax: 100,
+      durationsJson: ['Half Day', 'Full Day'],
+      featuresJson: ['Function Hall — 100 pax', 'Meeting Room — 20 pax', 'All courts + beach + pool', 'Fiber WiFi throughout', '2 meals included', 'On-site coordinator'],
+      sortOrder: 0,
+    },
+    {
+      type: 'corporate', name: 'The Overnight Build',
+      includesText: 'Accommodation (2 nights) · Full venue access · Team sports facilitation · Island tour · All meals · WiFi',
+      price: 0, priceMode: PriceMode.CUSTOM, customPriceText: 'Custom package — message us',
+      description: 'Two days, two nights. Morning strategy, afternoon island activities, evening dinners on the beach. The format that actually moves teams. Full accommodation, all meals, island tour — everything coordinated.',
+      imageUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=700&q=80',
+      minPax: 15, maxPax: 60,
+      durationsJson: ['2 Nights', '3 Nights', 'Custom'],
+      featuresJson: ['Accommodation · all rooms', 'Full venue access', 'Team sports facilitation', 'Island tour by bangka', 'All meals included', 'WiFi · full resort'],
+      sortOrder: 1,
+    },
+    {
+      type: 'corporate', name: 'The Full Buyout',
+      includesText: 'Exclusive resort use · All rooms · All venues · All recreation · Full staff · All meals',
+      price: 0, priceMode: PriceMode.INQUIRE,
+      description: 'The whole resort — exclusively yours. All rooms, all venues, every beach, the pool, the courts, the restaurant. Custom programming available. Available for a minimum of 2 nights.',
+      imageUrl: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=700&q=80',
+      minPax: 30, maxPax: 150,
+      durationsJson: ['2 Nights', '3 Nights', 'Custom'],
+      featuresJson: ['Exclusive full resort use', 'All rooms included', 'All venues + beach', 'Dedicated event host', 'Custom activity programming', 'All meals · catering team'],
+      sortOrder: 2,
+    },
+  ];
+
+  for (const p of packages) {
+    await prisma.eventPackage.create({
+      data: {
+        type: p.type,
+        name: p.name,
+        includesText: p.includesText,
+        price: p.price,
+        priceMode: p.priceMode,
+        customPriceText: (p as { customPriceText?: string }).customPriceText ?? '',
+        description: p.description,
+        imageUrl: p.imageUrl,
+        minPax: p.minPax,
+        maxPax: p.maxPax,
+        durationsJson: p.durationsJson,
+        featuresJson: p.featuresJson,
+        isPublished: true,
+        sortOrder: p.sortOrder,
+      },
+    });
+  }
+  console.log(`  ✓ ${packages.length} event packages`);
+
+  // ── Venues ──────────────────────────────────────────────
+  await prisma.venue.deleteMany();
+  const venues = [
+    {
+      type: 'wedding', tag: 'Garden · Open Air', name: 'Mangrove Pavilion',
+      subtitle: 'Ceremony & Reception · Up to 120 guests',
+      capacity: 'Up to 120 guests',
+      description: 'A shaded open-air pavilion set at the edge of the mangrove sanctuary. String lights overhead, the sound of the forest behind you, and the Davao Gulf just beyond the ceremony lawn. The most requested venue for intimate outdoor weddings.',
+      imageUrl: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=700&q=80',
+      modalImageUrl: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1200&q=90',
+      floorPlanSvgType: FloorPlanType.MANGROVE_PAVILION,
+      amenitiesJson: ['Open-air pavilion', 'Mangrove backdrop', 'String light canopy', 'Ceremony lawn', 'Cocktail terrace', 'Bridal suite', 'Built-in sound system', 'Fiber WiFi', 'Generator backup', 'In-house catering option'],
+      price: 0, priceMode: PriceMode.INQUIRE,
+      sortOrder: 0,
+    },
+    {
+      type: 'wedding', tag: 'Beachfront · Barefoot', name: 'Vow by the Sea',
+      subtitle: 'Ceremony at the Water\'s Edge · Up to 60 guests',
+      capacity: 'Up to 60 guests',
+      description: 'An intimate ceremony setup directly on the beach — sand underfoot, the Davao Gulf ahead, and a horizon that stretches to Mindanao. Designed for small, meaningful ceremonies where the setting does the work.',
+      imageUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=700&q=80',
+      modalImageUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=90',
+      floorPlanSvgType: FloorPlanType.VOW_BY_THE_SEA,
+      amenitiesJson: ['Beachfront ceremony space', 'Sunset-facing', 'Bamboo arch option', 'Petal aisle setup', 'Bonfire option', 'Portable sound system', 'Cocktail area on sand', 'Barefoot-optional', 'Photographer-friendly golden hour', 'Intimate capacity'],
+      price: 0, priceMode: PriceMode.INQUIRE,
+      sortOrder: 1,
+    },
+    {
+      type: 'wedding', tag: 'Indoor · Airconditioned', name: 'The Function Hall',
+      subtitle: 'Reception & Celebration · Up to 150 guests',
+      capacity: 'Up to 150 guests',
+      description: 'The resort\'s main indoor event space — fully air-conditioned with natural light, direct beach access, and a built-in AV system. The go-to for receptions that go past sunset and need a proper dance floor.',
+      imageUrl: 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=700&q=80',
+      modalImageUrl: 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=1200&q=90',
+      floorPlanSvgType: FloorPlanType.CUSTOM,
+      amenitiesJson: ['Air-conditioned throughout', '150-person capacity', 'Projector & stage', 'Dance floor', 'Sound system', 'Bridal room', 'Lawn overflow', 'Fiber WiFi', 'Generator backup', 'Catering coordination'],
+      price: 0, priceMode: PriceMode.INQUIRE,
+      sortOrder: 2,
+    },
+  ];
+
+  for (const v of venues) {
+    await prisma.venue.create({
+      data: {
+        type: v.type,
+        tag: v.tag,
+        name: v.name,
+        subtitle: v.subtitle,
+        capacity: v.capacity,
+        description: v.description,
+        imageUrl: v.imageUrl,
+        modalImageUrl: v.modalImageUrl,
+        floorPlanSvgType: v.floorPlanSvgType,
+        amenitiesJson: v.amenitiesJson,
+        price: v.price,
+        priceMode: v.priceMode,
+        isPublished: true,
+        sortOrder: v.sortOrder,
+      },
+    });
+  }
+  console.log(`  ✓ ${venues.length} venues`);
 
   console.log('\n✅ Seed complete!');
   console.log(`\n  Admin login: ${adminEmail}`);
