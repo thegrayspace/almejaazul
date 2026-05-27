@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
 import { z } from 'zod';
 import { SESSION_OPTIONS } from '@/lib/auth';
-import { getIronSession } from 'iron-session';
+import { sealData } from 'iron-session';
 import type { SessionData } from '@/lib/auth';
 
 const LoginSchema = z.object({
@@ -62,14 +61,23 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }
 
-    const cookieStore = await cookies();
-    const session = await getIronSession<SessionData>(cookieStore, SESSION_OPTIONS);
-    session.isLoggedIn = true;
-    session.userId = user.id;
-    session.email = user.email;
-    await session.save();
+    // Seal the session data using iron-session's sealData directly.
+    // Then set the cookie explicitly on the NextResponse — this is the most
+    // reliable approach in Next.js 15 App Router Route Handlers, bypassing
+    // any async-context cookie plumbing.
+    const sessionData: SessionData = { isLoggedIn: true, userId: user.id, email: user.email };
+    const seal = await sealData(sessionData, { password: SESSION_OPTIONS.password as string });
 
-    return NextResponse.json({ success: true });
+    const response = NextResponse.json({ success: true });
+    response.cookies.set(SESSION_OPTIONS.cookieName, seal, {
+      httpOnly: SESSION_OPTIONS.cookieOptions?.httpOnly ?? true,
+      secure: SESSION_OPTIONS.cookieOptions?.secure ?? (process.env.NODE_ENV === 'production'),
+      sameSite: (SESSION_OPTIONS.cookieOptions?.sameSite as 'lax' | 'strict' | 'none') ?? 'lax',
+      maxAge: SESSION_OPTIONS.cookieOptions?.maxAge ?? 60 * 60 * 24 * 7,
+      path: '/',
+    });
+
+    return response;
   } catch (err) {
     console.error('[admin/login] error:', err);
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
