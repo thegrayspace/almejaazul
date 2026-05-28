@@ -33,7 +33,7 @@ export default async function AdminDashboard() {
         </div>
         <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
           <Link href="/" style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', textDecoration: 'none' }}>← View site</Link>
-          <Link href="/api/admin/logout" style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.45)', textDecoration: 'none' }}>Sign out</Link>
+          <a href="/api/admin/logout" style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.45)', textDecoration: 'none' }}>Sign out</a>
         </div>
       </div>
 
@@ -47,6 +47,7 @@ export default async function AdminDashboard() {
             <Link
               key={item.href}
               href={item.href}
+              prefetch={false}
               style={{ display: 'block', background: '#fff', borderRadius: 8, padding: '24px 28px', textDecoration: 'none', boxShadow: '0 2px 12px rgba(26,37,48,0.06)', transition: 'box-shadow 0.2s, transform 0.2s' }}
             >
               <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#4BBFE0', marginBottom: 6 }}>
