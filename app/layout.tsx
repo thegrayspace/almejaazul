@@ -17,7 +17,10 @@ const plusJakarta = Plus_Jakarta_Sans({
   display: 'swap',
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     default: 'Almeja Azul — LYR Beach Resort, Samal Island',
     template: '%s | Almeja Azul',
@@ -28,6 +31,7 @@ export const metadata: Metadata = {
     siteName: 'Almeja Azul',
     locale: 'en_PH',
     type: 'website',
+    url: siteUrl,
   },
 };
 
