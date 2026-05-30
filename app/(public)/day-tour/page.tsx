@@ -1,12 +1,14 @@
-import type { Metadata } from 'next';
 import '@/styles/pages/day-tour.css';
 import DayTourContent, { PassItem, AddOnItem } from '@/components/public/DayTourContent';
 import { prisma } from '@/lib/db';
+import { generateOgMetadata } from '@/lib/seo/og';
 
-export const metadata: Metadata = {
+export const metadata = generateOgMetadata({
   title: 'Day Tour',
-  description: 'No overnight stay required. Two beach fronts, infinity pool, water sports, fresh food, and high-speed WiFi. Walk-ins welcome, pets welcome.',
-};
+  description:
+    'No overnight stay required. Two beach fronts, infinity pool, water sports, fresh food, and high-speed WiFi. Walk-ins welcome, pets welcome.',
+  path: '/day-tour',
+});
 
 function formatPrice(price: number, mode: string, customText: string): string {
   if (mode === 'INQUIRE') return 'Inquire for rates';

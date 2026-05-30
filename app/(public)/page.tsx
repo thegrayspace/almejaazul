@@ -1,14 +1,16 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import '@/styles/pages/home.css';
 import MangroveSection from '@/components/public/MangroveSection';
 import { IconBolt, IconUmbrella, IconWaves, IconCottage, IconPaw, IconPhone } from '@/components/icons';
+import { generateOgMetadata } from '@/lib/seo/og';
 
-export const metadata: Metadata = {
+export const metadata = generateOgMetadata({
   title: 'Almeja Azul — LYR Beach Resort · Samal Island',
   description:
     'Five hectares of coastline, mangrove forest, and Davao Gulf light. Two beach fronts. High-speed fiber. One unhurried pace of life.',
-};
+  path: '/',
+  absoluteTitle: true,
+});
 
 const SECTIONS = [
   { label: 'Stay', sub: 'Rooms & Spaces', href: '/stay', img: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80' },

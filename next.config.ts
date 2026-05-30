@@ -11,6 +11,12 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.almejaazul.com' }],
+        destination: 'https://almejaazul.com/:path*',
+        permanent: true,
+      },
       { source: '/Almeja%20Azul.html', destination: '/', permanent: true },
       { source: '/stay.html',          destination: '/stay',      permanent: true },
       { source: '/day-tour.html',      destination: '/day-tour',  permanent: true },

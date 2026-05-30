@@ -1,5 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { after, NextRequest, NextResponse } from 'next/server';
+import { randomUUID } from 'crypto';
 import { z } from 'zod';
+import { sendCapiEvent } from '@/lib/analytics';
+import { sendInquiryEmails } from '@/lib/email/send-inquiry-emails';
 
 const InquirySchema = z.object({
   name: z.string().min(1).max(200),
@@ -10,6 +13,8 @@ const InquirySchema = z.object({
   arrivalDate: z.string().max(20).optional(),
   departureDate: z.string().max(20).optional(),
   message: z.string().max(2000).optional(),
+  eventId: z.string().min(1).max(100).optional(),
+  sourcePage: z.string().max(100).optional(),
 });
 
 // Simple in-memory rate limiter (IP → [timestamps])
@@ -49,7 +54,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const { prisma } = await import('@/lib/db');
-    await prisma.inquiry.create({
+    const newInquiry = await prisma.inquiry.create({
       data: {
         name: data.name,
         email: data.email,
@@ -59,11 +64,40 @@ export async function POST(req: NextRequest) {
         requestedDate: data.arrivalDate ? new Date(data.arrivalDate) : null,
         departurDate: data.departureDate ? new Date(data.departureDate) : null,
         message: data.message ?? '',
+        sourcePage: data.sourcePage ?? '',
       },
+    });
+
+    after(async () => {
+      try {
+        await sendInquiryEmails(newInquiry);
+      } catch (err) {
+        console.error('[inquiry] sendInquiryEmails threw:', err);
+      }
     });
   } catch (err) {
     // Log but don't fail the request — user experience matters more than DB write
     console.error('[inquiry] DB write failed:', err);
+  }
+
+  try {
+    const eventId = data.eventId ?? randomUUID();
+    await sendCapiEvent(
+      'Lead',
+      {
+        email: data.email,
+        phone: data.phone,
+        ip: ip !== 'unknown' ? ip.split(',')[0].trim() : undefined,
+        userAgent: req.headers.get('user-agent') ?? undefined,
+      },
+      {
+        event_id: eventId,
+        event_source_url: req.headers.get('referer') ?? undefined,
+        source: data.sourcePage || data.inquiryType || 'inquiry',
+      },
+    );
+  } catch (err) {
+    console.error('[inquiry] Meta CAPI send failed:', err);
   }
 
   return NextResponse.json({ success: true }, { status: 201 });

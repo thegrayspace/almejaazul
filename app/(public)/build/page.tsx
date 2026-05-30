@@ -1,14 +1,16 @@
-import type { Metadata } from 'next';
 import '@/styles/pages/build.css';
 import BuildTabs, { PackageItem, VenueItem } from '@/components/public/BuildTabs';
 import { prisma } from '@/lib/db';
+import { generateOgMetadata } from '@/lib/seo/og';
 
 export const dynamic = 'force-dynamic';
 
-export const metadata: Metadata = {
+export const metadata = generateOgMetadata({
   title: 'Build Your Event',
-  description: 'Corporate retreats, team building, destination weddings, and private events at Almeja Azul on Samal Island.',
-};
+  description:
+    'Corporate retreats, team building, destination weddings, and private events at Almeja Azul on Samal Island.',
+  path: '/build',
+});
 
 function formatPrice(price: number, mode: string, customText: string): string {
   if (mode === 'INQUIRE') return 'Custom package — message us';

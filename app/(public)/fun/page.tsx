@@ -1,12 +1,14 @@
-import type { Metadata } from 'next';
 import '@/styles/pages/fun.css';
 import FunContent, { ActivityItem } from '@/components/public/FunContent';
 import { prisma } from '@/lib/db';
+import { generateOgMetadata } from '@/lib/seo/og';
 
-export const metadata: Metadata = {
+export const metadata = generateOgMetadata({
   title: 'Fun & Recreation',
-  description: 'Water sports, pickleball, kayaking, snorkeling, banana boat, pool, and beach recreation at Almeja Azul on Samal Island.',
-};
+  description:
+    'Water sports, pickleball, kayaking, snorkeling, banana boat, pool, and beach recreation at Almeja Azul on Samal Island.',
+  path: '/fun',
+});
 
 const CATEGORY_LABELS: Record<string, string> = {
   COURT_SPORT: 'Court Sport',

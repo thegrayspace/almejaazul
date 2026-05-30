@@ -1,13 +1,14 @@
-import type { Metadata } from 'next';
 import '@/styles/pages/stay.css';
 import StayGrid from '@/components/public/StayGrid';
 import { prisma } from '@/lib/db';
+import { generateOgMetadata } from '@/lib/seo/og';
 
-export const metadata: Metadata = {
+export const metadata = generateOgMetadata({
   title: 'Rooms & Spaces',
   description:
     'Aircon rooms for 2 to 12 guests on Samal Island. All with full beach access, infinity pool, and high-speed fiber WiFi.',
-};
+  path: '/stay',
+});
 
 function formatPrice(amount: number, mode: string, suffix: string): string {
   if (mode === 'INQUIRE') return 'Inquire';

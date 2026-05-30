@@ -1,10 +1,12 @@
-import type { Metadata } from 'next';
 import '@/styles/pages/archive.css';
+import { generateOgMetadata } from '@/lib/seo/og';
 
-export const metadata: Metadata = {
+export const metadata = generateOgMetadata({
   title: 'Concepts & Archive',
-  description: 'Three concept explorations from the Almeja Azul design process — pickleball destination, Isla Vida Collective, and Virtual Samal.',
-};
+  description:
+    'Three concept explorations from the Almeja Azul design process — pickleball destination, Isla Vida Collective, and Virtual Samal.',
+  path: '/archive',
+});
 
 const ISLA_SVCS = [
   'Island Living Consulting',

@@ -1,12 +1,14 @@
-import type { Metadata } from 'next';
 import '@/styles/pages/see.css';
 import SeeContent, { TourItem } from '@/components/public/SeeContent';
 import { prisma } from '@/lib/db';
+import { generateOgMetadata } from '@/lib/seo/og';
 
-export const metadata: Metadata = {
+export const metadata = generateOgMetadata({
   title: 'See & Explore',
-  description: 'Island tours, reef snorkeling, mangrove kayaking, and natural wonders around Samal Island from Almeja Azul.',
-};
+  description:
+    'Island tours, reef snorkeling, mangrove kayaking, and natural wonders around Samal Island from Almeja Azul.',
+  path: '/see',
+});
 
 function formatPrice(price: number, mode: string, customText: string): string {
   if (mode === 'INQUIRE') return 'Inquire for rates';
