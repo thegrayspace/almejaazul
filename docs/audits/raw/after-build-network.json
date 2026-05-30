@@ -1,0 +1,122 @@
+{
+  "route": "/build",
+  "screenshot": "docs/audits/screenshots/after-build-mobile.png",
+  "lcp": null,
+  "perf": {
+    "domContentLoaded": 732,
+    "loadEventEnd": 1208,
+    "firstPaint": 756,
+    "firstContentfulPaint": 756
+  },
+  "requestCount": 12,
+  "totalTransferKb": 9826,
+  "imageTransferKb": 42,
+  "heaviestImages": [
+    {
+      "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fcorporate-retreat.webp&w=828&q=75",
+      "kb": 38,
+      "ms": 199
+    },
+    {
+      "url": "/_next/image?url=%2Fuploads%2Foptimized%2Falmeja-logo.webp&w=64&q=75",
+      "kb": 3,
+      "ms": 11
+    }
+  ],
+  "consoleMessages": [
+    {
+      "type": "warning",
+      "text": "Image with src \"/uploads/optimized/corporate-retreat.webp\" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: \"auto\"' or 'height: \"auto\"' to maintain the aspect ratio."
+    },
+    {
+      "type": "warning",
+      "text": "Deprecated API for given entry type."
+    }
+  ],
+  "waterfall": [
+    {
+      "url": "/build",
+      "type": "document",
+      "status": 200,
+      "ms": 732,
+      "kb": 54
+    },
+    {
+      "url": "/_next/static/css/app/layout.css?v=1779976471449",
+      "type": "stylesheet",
+      "status": 200,
+      "ms": 15,
+      "kb": 21
+    },
+    {
+      "url": "/_next/static/css/app/(public)/build/page.css?v=1779976471449",
+      "type": "stylesheet",
+      "status": 200,
+      "ms": 18,
+      "kb": 8
+    },
+    {
+      "url": "/_next/image?url=%2Fuploads%2Foptimized%2Falmeja-logo.webp&w=64&q=75",
+      "type": "image",
+      "status": 200,
+      "ms": 11,
+      "kb": 3
+    },
+    {
+      "url": "/_next/static/chunks/webpack.js?v=1779976471449",
+      "type": "script",
+      "status": 200,
+      "ms": 79,
+      "kb": 138
+    },
+    {
+      "url": "/_next/static/chunks/app-pages-internals.js",
+      "type": "script",
+      "status": 200,
+      "ms": 80,
+      "kb": 248
+    },
+    {
+      "url": "/_next/static/chunks/app/(public)/layout.js",
+      "type": "script",
+      "status": 200,
+      "ms": 83,
+      "kb": 657
+    },
+    {
+      "url": "/_next/static/chunks/app/(public)/page.js",
+      "type": "script",
+      "status": 200,
+      "ms": 83,
+      "kb": 562
+    },
+    {
+      "url": "/_next/static/chunks/app/(public)/build/page.js",
+      "type": "script",
+      "status": 200,
+      "ms": 84,
+      "kb": 661
+    },
+    {
+      "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fcorporate-retreat.webp&w=828&q=75",
+      "type": "image",
+      "status": 200,
+      "ms": 199,
+      "kb": 38
+    },
+    {
+      "url": "/_next/static/chunks/main-app.js?v=1779976471449",
+      "type": "script",
+      "status": 200,
+      "ms": 237,
+      "kb": 7430
+    },
+    {
+      "url": "/_next/static/chunks/_app-pages-browser_node_modules_next_dist_client_dev_noop-turbopack-hmr_js.js",
+      "type": "script",
+      "status": 200,
+      "ms": 9,
+      "kb": 6
+    }
+  ]
+}

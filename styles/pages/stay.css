@@ -1,5 +1,6 @@
 .page-hero { height:60vh; min-height:420px; position:relative; overflow:hidden; display:flex; align-items:flex-end; padding:0 72px 72px; }
-.page-hero-bg { position:absolute; inset:0; background-size:cover; background-position:center; }
+.page-hero-bg { position:absolute; inset:0; }
+.page-hero-img { object-fit:cover; object-position:center; }
 .page-hero-vgn { position:absolute; inset:0; background:linear-gradient(to top,rgba(26,37,48,0.88) 0%,rgba(26,37,48,0.3) 60%,transparent 100%); }
 .page-hero-content { position:relative; z-index:1; }
 .rooms-section { padding:100px 72px; background:var(--c-oyster); }

@@ -1,0 +1,74 @@
+[
+  {
+    "route": "/",
+    "lcp": {
+      "startTime": 2104,
+      "size": 7820,
+      "url": "http://localhost:3000/uploads/Almeja_Logo_Large_PNG.png",
+      "selector": "img",
+      "tag": "IMG",
+      "text": "",
+      "currentSrc": "http://localhost:3000/uploads/Almeja_Logo_Large_PNG.png"
+    }
+  },
+  {
+    "route": "/stay",
+    "lcp": {
+      "startTime": 2200,
+      "size": 197340,
+      "url": "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=2000&q=85",
+      "selector": "div.page-hero-bg",
+      "tag": "DIV",
+      "text": "",
+      "currentSrc": ""
+    }
+  },
+  {
+    "route": "/day-tour",
+    "lcp": {
+      "startTime": 2052,
+      "size": 148200,
+      "url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=2400&q=90",
+      "selector": "div.dt-hero-bg",
+      "tag": "DIV",
+      "text": "",
+      "currentSrc": ""
+    }
+  },
+  {
+    "route": "/fun",
+    "lcp": {
+      "startTime": 2248,
+      "size": 213951,
+      "url": "https://images.unsplash.com/photo-1530053969600-caed2596d242?w=2000&q=85",
+      "selector": "div.page-hero-bg",
+      "tag": "DIV",
+      "text": "",
+      "currentSrc": ""
+    }
+  },
+  {
+    "route": "/build",
+    "lcp": {
+      "startTime": 2392,
+      "size": 230410,
+      "url": "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=2000&q=85",
+      "selector": "div.page-hero-bg",
+      "tag": "DIV",
+      "text": "",
+      "currentSrc": ""
+    }
+  },
+  {
+    "route": "/see",
+    "lcp": {
+      "startTime": 2024,
+      "size": 27605,
+      "url": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=700&q=80",
+      "selector": "img.tour-img",
+      "tag": "IMG",
+      "text": "",
+      "currentSrc": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=700&q=80"
+    }
+  }
+]

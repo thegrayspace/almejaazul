@@ -1,7 +1,9 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import '@/styles/pages/fun.css';
 import FunContent, { ActivityItem } from '@/components/public/FunContent';
 import { prisma } from '@/lib/db';
+import OptimizedImage from '@/components/public/OptimizedImage';
+import { resortImages } from '@/lib/image-assets';
 
 export const metadata: Metadata = {
   title: 'Fun & Recreation',
@@ -24,7 +26,7 @@ function formatPrice(price: number, mode: string, customText: string): string {
   if (mode === 'INCLUDED') return 'Included';
   if (mode === 'COMPLIMENTARY') return 'Complimentary';
   if (mode === 'CUSTOM') return customText;
-  return `₱${price.toLocaleString()}`;
+  return `â‚±${price.toLocaleString()}`;
 }
 
 export default async function FunPage() {
@@ -43,17 +45,28 @@ export default async function FunPage() {
         status: a.isPlaceholder ? 'request' : 'active',
       }));
     }
-  } catch { /* DB unavailable — FunContent will use built-in defaults */ }
+  } catch { /* DB unavailable â€” FunContent will use built-in defaults */ }
 
   return (
     <>
       <section className="page-hero">
-        <div className="page-hero-bg" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1530053969600-caed2596d242?w=2000&q=85')" }} />
+        <div className="page-hero-bg">
+          <OptimizedImage
+            src={resortImages.waterSports}
+            alt=""
+            fill
+            priority
+            fetchPriority="high"
+            quality={50}
+            sizes="100vw"
+            className="page-hero-img"
+          />
+        </div>
         <div className="page-hero-vgn" />
         <div className="page-hero-content">
           <p className="hero-eyebrow">Recreation</p>
           <h1 className="s-title-light">Sports &amp; <em>Play</em></h1>
-          <p>Water sports, courts, pool, and beach — everything moving, all day long.</p>
+          <p>Water sports, courts, pool, and beach â€” everything moving, all day long.</p>
         </div>
       </section>
       <FunContent activities={activities} />

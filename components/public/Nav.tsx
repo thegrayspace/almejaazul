@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useInquiry } from './InquiryModal';
+import OptimizedImage from './OptimizedImage';
+import { resortImages } from '@/lib/image-assets';
 
 const NAV_LINKS = [
   { href: '/stay', label: 'Stay' },
@@ -38,7 +40,15 @@ export default function Nav() {
   return (
     <nav className={navClass}>
       <Link href="/" className="nav-logo">
-        <img src="/uploads/Almeja_Logo_Large_PNG.png" alt="Almeja Azul" />
+        <OptimizedImage
+          src={resortImages.logo}
+          alt="Almeja Azul"
+          width={96}
+          height={89}
+          priority
+          fetchPriority="high"
+          sizes="(max-width: 720px) 32px, 85px"
+        />
       </Link>
 
       <div className={`nav-links${menuOpen ? ' open' : ''}`}>

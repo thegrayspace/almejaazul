@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import OptimizedImage from './OptimizedImage';
+import { resortImages } from '@/lib/image-assets';
 
 export default function MangroveSection() {
   const bgRef = useRef<HTMLDivElement>(null);
@@ -23,7 +25,9 @@ export default function MangroveSection() {
 
   return (
     <section className="mangrove">
-      <div className="mg-bg" ref={bgRef} />
+      <div className="mg-bg" ref={bgRef}>
+        <OptimizedImage src={resortImages.mangrove} alt="" fill sizes="100vw" className="mg-bg-img" />
+      </div>
       <div className="mg-vgn" />
       <div className="mg-content">
         <span className="s-eyebrow-light">The Mangrove Sanctuary</span>

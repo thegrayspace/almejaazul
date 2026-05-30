@@ -8,6 +8,8 @@ import {
   useCallback,
   type ReactNode,
 } from 'react';
+import OptimizedImage from './OptimizedImage';
+import { resortImages } from '@/lib/image-assets';
 
 const CC = [
   { v: '+63', t: '+63 Philippines' },
@@ -112,10 +114,13 @@ function InquiryModal({ state, onClose }: { state: ModalState; onClose: () => vo
         <button className="alm-inq-close" onClick={onClose}>✕</button>
 
         <div className="alm-inq-side">
-          <img
+          <OptimizedImage
             className="alm-inq-side-logo"
-            src="/uploads/Almeja_Logo_Large_PNG.png"
+            src={resortImages.logo}
             alt="Almeja Azul"
+            width={150}
+            height={139}
+            sizes="150px"
           />
           <h3>Make your<br /><em>visit happen</em></h3>
         </div>

@@ -1,7 +1,9 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import '@/styles/pages/stay.css';
 import StayGrid from '@/components/public/StayGrid';
 import { prisma } from '@/lib/db';
+import OptimizedImage from '@/components/public/OptimizedImage';
+import { resortImages } from '@/lib/image-assets';
 
 export const metadata: Metadata = {
   title: 'Rooms & Spaces',
@@ -13,7 +15,7 @@ function formatPrice(amount: number, mode: string, suffix: string): string {
   if (mode === 'INQUIRE') return 'Inquire';
   if (mode === 'INCLUDED') return 'Included';
   if (mode === 'COMPLIMENTARY') return 'Complimentary';
-  return `₱${amount.toLocaleString()}`;
+  return `â‚±${amount.toLocaleString()}`;
 }
 
 export default async function StayPage() {
@@ -59,16 +61,24 @@ export default async function StayPage() {
       }));
     }
   } catch {
-    // DB unavailable — StayGrid will use built-in defaults
+    // DB unavailable â€” StayGrid will use built-in defaults
   }
 
   return (
     <>
       <section className="page-hero">
-        <div
-          className="page-hero-bg"
-          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=2000&q=85')" }}
-        />
+        <div className="page-hero-bg">
+          <OptimizedImage
+            src={resortImages.grandRoom}
+            alt=""
+            fill
+            priority
+            fetchPriority="high"
+            quality={50}
+            sizes="100vw"
+            className="page-hero-img"
+          />
+        </div>
         <div className="page-hero-vgn" />
         <div className="page-hero-content">
           <p className="s-eyebrow-light">Where You Stay</p>

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { IconPhone } from '@/components/icons';
 import { useInquiry } from './InquiryModal';
 import Link from 'next/link';
+import OptimizedImage from './OptimizedImage';
 
 // ── TYPES ─────────────────────────────────────────────────
 
@@ -151,8 +152,7 @@ function PackageModal({ pkg, onClose }: { pkg: PackageItem; onClose: () => void 
     <div className={`mOverlay${on ? ' on' : ''}`} onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
       <div className="modal" style={{ maxWidth: 960 }}>
         <div className="m-gallery">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={pkg.img} alt={pkg.name} />
+          <OptimizedImage src={pkg.img} alt={pkg.name} width={1200} height={800} sizes="(max-width: 720px) 100vw, 50vw" />
           <button className="m-close" onClick={onClose}>✕</button>
           <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: 24, background: 'linear-gradient(to top,rgba(26,37,48,0.92),transparent)' }}>
             <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--c-brand)', marginBottom: 6 }}>{pkg.minPax}–{pkg.maxPax} pax · {pkg.duration.join(' / ')}</p>
@@ -244,12 +244,9 @@ function CorporateTab({ packages }: { packages: PackageItem[] }) {
           </a>
         </div>
         <div className="corp-visual">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=85" alt="Meeting" />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=500&q=80" alt="Pickleball" />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=80" alt="Beach" />
+          <OptimizedImage src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=85" alt="Meeting" width={800} height={533} sizes="(max-width: 1024px) 100vw, 50vw" />
+          <OptimizedImage src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=500&q=80" alt="Pickleball" width={500} height={333} sizes="(max-width: 1024px) 50vw, 25vw" />
+          <OptimizedImage src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=80" alt="Beach" width={500} height={333} sizes="(max-width: 1024px) 50vw, 25vw" />
         </div>
       </div>
       {activePkg && <PackageModal pkg={activePkg} onClose={() => setActivePkg(null)} />}
@@ -270,10 +267,8 @@ function WeddingsTab({ venues }: { venues: VenueItem[] }) {
       </div>
       <div className="wed-intro" style={{ marginTop: 56 }}>
         <div style={{ position: 'relative' }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="wed-img-main" src="https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=85" alt="Sunset wedding" />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="wed-img-inset" src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=500&q=80" alt="Mangrove pavilion" />
+          <OptimizedImage className="wed-img-main" src="https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=85" alt="Sunset wedding" width={900} height={675} sizes="(max-width: 1024px) 100vw, 50vw" />
+          <OptimizedImage className="wed-img-inset" src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=500&q=80" alt="Mangrove pavilion" width={500} height={333} sizes="(max-width: 1024px) 50vw, 25vw" />
         </div>
         <div>
           <p className="s-body" style={{ marginBottom: 28 }}>
@@ -298,8 +293,7 @@ function WeddingsTab({ venues }: { venues: VenueItem[] }) {
         <div className="wed-venue-grid">
           {venues.map(v => (
             <div key={v.name} className="wed-venue">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={v.img} alt={v.name} loading="lazy" />
+              <OptimizedImage src={v.img} alt={v.name} width={900} height={506} sizes="(max-width: 1024px) 100vw, 50vw" />
               <div className="wed-venue-overlay" />
               <div className="wed-venue-body">
                 <p className="wed-venue-tag">{v.tag}</p>
