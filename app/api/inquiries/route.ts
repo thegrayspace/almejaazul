@@ -1,5 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { after, NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
+import { notifyNewInquiry } from '@/lib/alerts/notify-new-inquiry';
 
 const InquirySchema = z.object({
   name: z.string().min(1).max(200),
@@ -9,6 +10,7 @@ const InquirySchema = z.object({
   guests: z.number().int().min(1).max(10000).optional(),
   arrivalDate: z.string().max(20).optional(),
   departureDate: z.string().max(20).optional(),
+  sourcePage: z.string().max(300).optional(),
   message: z.string().max(2000).optional(),
 });
 
@@ -49,7 +51,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const { prisma } = await import('@/lib/db');
-    await prisma.inquiry.create({
+    const newInquiry = await prisma.inquiry.create({
       data: {
         name: data.name,
         email: data.email,
@@ -58,9 +60,22 @@ export async function POST(req: NextRequest) {
         guestCount: data.guests ?? null,
         requestedDate: data.arrivalDate ? new Date(data.arrivalDate) : null,
         departurDate: data.departureDate ? new Date(data.departureDate) : null,
+        sourcePage: data.sourcePage ?? '',
         message: data.message ?? '',
       },
     });
+
+    try {
+      after(async () => {
+        try {
+          await notifyNewInquiry(newInquiry);
+        } catch (err) {
+          console.error('[inquiry] alert dispatch failed:', err);
+        }
+      });
+    } catch (err) {
+      console.error('[inquiry] alert scheduling failed:', err);
+    }
   } catch (err) {
     // Log but don't fail the request — user experience matters more than DB write
     console.error('[inquiry] DB write failed:', err);
