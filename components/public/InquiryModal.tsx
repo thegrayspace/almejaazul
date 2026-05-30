@@ -96,6 +96,7 @@ function InquiryModal({ state, onClose }: { state: ModalState; onClose: () => vo
           guests: form.guests ? parseInt(form.guests) : undefined,
           arrivalDate: form.arrival || undefined,
           departureDate: form.departure || undefined,
+          sourcePage: window.location.pathname,
           message: form.message,
         }),
       });
