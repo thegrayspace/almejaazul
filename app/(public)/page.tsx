@@ -1,16 +1,18 @@
-﻿import type { Metadata } from 'next';
 import Link from 'next/link';
 import '@/styles/pages/home.css';
 import MangroveSection from '@/components/public/MangroveSection';
 import { IconBolt, IconUmbrella, IconWaves, IconCottage, IconPaw, IconPhone } from '@/components/icons';
+import { generateOgMetadata } from '@/lib/seo/og';
 import OptimizedImage from '@/components/public/OptimizedImage';
 import { resortImages } from '@/lib/image-assets';
 
-export const metadata: Metadata = {
-  title: 'Almeja Azul â€” LYR Beach Resort Â· Samal Island',
+export const metadata = generateOgMetadata({
+  title: 'Almeja Azul — LYR Beach Resort · Samal Island',
   description:
     'Five hectares of coastline, mangrove forest, and Davao Gulf light. Two beach fronts. High-speed fiber. One unhurried pace of life.',
-};
+  path: '/',
+  absoluteTitle: true,
+});
 
 const SECTIONS = [
   { label: 'Stay', sub: 'Rooms & Spaces', href: '/stay', img: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80' },
@@ -21,8 +23,8 @@ const SECTIONS = [
 ];
 
 const FB_UPDATES = [
-  { date: 'April 2026', text: 'Summer is in full swing at Almeja Azul â€” pool, beaches, and all water sports open daily. Book your stay or day tour now!' },
-  { date: 'March 2026', text: 'Our Coastal Cabanas are now bookable for intimate gatherings and corporate breakout sessions. Limited slots â€” message us to reserve.' },
+  { date: 'April 2026', text: 'Summer is in full swing at Almeja Azul — pool, beaches, and all water sports open daily. Book your stay or day tour now!' },
+  { date: 'March 2026', text: 'Our Coastal Cabanas are now bookable for intimate gatherings and corporate breakout sessions. Limited slots — message us to reserve.' },
   { date: 'Feb 2026', text: 'New: Giant Chess, Cornhole, and upgraded Pickleball courts now open to all guests. Tournaments coming soon!' },
 ];
 
@@ -45,7 +47,7 @@ export default function HomePage() {
         </div>
         <div className="hero-vgn" />
         <div className="hero-content">
-          <p className="hero-eyebrow">Brgy. Adecor Â· Samal Island Â· Davao del Norte</p>
+          <p className="hero-eyebrow">Brgy. Adecor · Samal Island · Davao del Norte</p>
           <h1 className="hero-title">
             <span className="ln"><span className="lni">White sand.</span></span>
             <span className="ln"><span className="lni">Open sea.</span></span>
@@ -57,7 +59,7 @@ export default function HomePage() {
           </p>
           <div className="hero-acts">
             <Link href="/stay" className="btn-brand rpl">Book Your Stay</Link>
-            <Link href="/day-tour" className="btn-outline">Day Tour Â· From â‚±200</Link>
+            <Link href="/day-tour" className="btn-outline">Day Tour · From ₱200</Link>
           </div>
         </div>
         <div className="hero-scroll">
@@ -78,7 +80,7 @@ export default function HomePage() {
           <div className="stat"><div className="n">5</div><div className="l">Hectares</div></div>
           <div className="stat"><div className="n">2</div><div className="l">Beach Fronts</div></div>
           <div className="stat"><div className="n">1G</div><div className="l">Fiber WiFi</div></div>
-          <div className="stat"><div className="n">âˆž</div><div className="l">Pool Access</div></div>
+          <div className="stat"><div className="n">∞</div><div className="l">Pool Access</div></div>
         </div>
       </div>
 
@@ -87,7 +89,7 @@ export default function HomePage() {
         <span className="wifi-icon"><IconBolt size={20} /></span>
         <span className="wifi-text">
           Now featuring <strong>High-Speed Fiber Internet</strong> across all rooms, event spaces,
-          and common areas â€” stay connected while you unwind.
+          and common areas — stay connected while you unwind.
         </span>
         <div className="wifi-badge">1 Gbps Available</div>
       </div>
@@ -100,7 +102,7 @@ export default function HomePage() {
             <h2 className="s-title">Everything<br /><em>Almeja Azul</em></h2>
           </div>
           <p className="hub-desc">
-            From overnight stays to island tours, team-building retreats to day passes â€” one island,
+            From overnight stays to island tours, team-building retreats to day passes — one island,
             infinite reasons to come.
           </p>
         </div>
@@ -119,14 +121,14 @@ export default function HomePage() {
               <div className="hub-card-body">
                 <p className="hub-card-label">{s.sub}</p>
                 <p className="hub-card-name">{s.label}</p>
-                <div className="hub-card-arrow">â†’</div>
+                <div className="hub-card-arrow">→</div>
               </div>
             </Link>
           ))}
         </div>
       </section>
 
-      {/* MANGROVE SANCTUARY â€” client component for parallax */}
+      {/* MANGROVE SANCTUARY — client component for parallax */}
       <MangroveSection />
 
       {/* EVENTS TEASER */}
@@ -143,7 +145,7 @@ export default function HomePage() {
             <p className="event-tag">Destination Wedding</p>
             <h3 className="event-name">Vow by<br />the Sea</h3>
             <p className="event-sub">Seaside ceremonies &amp; mangrove pavilion receptions.</p>
-            <span className="event-link">Explore Venues â†’</span>
+            <span className="event-link">Explore Venues →</span>
           </div>
         </Link>
         <Link href="/build#corporate" className="event-half">
@@ -158,7 +160,7 @@ export default function HomePage() {
             <p className="event-tag">Corporate Retreat</p>
             <h3 className="event-name">Offsite,<br /><em>Elevated</em></h3>
             <p className="event-sub">Function hall, meeting room, team-building, and beaches.</p>
-            <span className="event-link">Plan Your Retreat â†’</span>
+            <span className="event-link">Plan Your Retreat →</span>
           </div>
         </Link>
       </div>
@@ -170,35 +172,35 @@ export default function HomePage() {
             <p className="s-eyebrow">The Day Pass</p>
             <h2 className="s-title">No overnight<br />stay <em>required.</em></h2>
           </div>
-          <Link href="/day-tour" className="btn-dark">Full Day Tour Info â†’</Link>
+          <Link href="/day-tour" className="btn-dark">Full Day Tour Info →</Link>
         </div>
         <div className="dt-tiles">
           <div className="dt-tile">
             <div className="dt-tile-icon"><IconUmbrella size={32} /></div>
-            <div className="dt-tile-price">â‚±200</div>
+            <div className="dt-tile-price">₱200</div>
             <div className="dt-tile-name">Seaside Day Pass</div>
-            <div className="dt-tile-sub">Beach access Â· Both fronts Â· All day</div>
+            <div className="dt-tile-sub">Beach access · Both fronts · All day</div>
             <div className="dt-tile-note">Per person</div>
           </div>
           <div className="dt-tile">
             <div className="dt-tile-icon"><IconWaves size={32} /></div>
-            <div className="dt-tile-price">â‚±300</div>
+            <div className="dt-tile-price">₱300</div>
             <div className="dt-tile-name">Beach + Pool</div>
             <div className="dt-tile-sub">Infinity pool + beach access</div>
             <div className="dt-tile-note">Per person</div>
           </div>
           <div className="dt-tile">
             <div className="dt-tile-icon"><IconCottage size={32} /></div>
-            <div className="dt-tile-price">â‚±300</div>
+            <div className="dt-tile-price">₱300</div>
             <div className="dt-tile-name">Cottage Rental</div>
-            <div className="dt-tile-sub">Shaded beachside cottage Â· Full day</div>
+            <div className="dt-tile-sub">Shaded beachside cottage · Full day</div>
             <div className="dt-tile-note">Per cottage</div>
           </div>
           <div className="dt-tile">
             <div className="dt-tile-icon"><IconPaw size={32} /></div>
             <div className="dt-tile-price">Always</div>
             <div className="dt-tile-name">Pet-Friendly</div>
-            <div className="dt-tile-sub">Bring the whole family â€” pets welcome</div>
+            <div className="dt-tile-sub">Bring the whole family — pets welcome</div>
             <div className="dt-tile-note">Open daily</div>
           </div>
         </div>
@@ -211,7 +213,7 @@ export default function HomePage() {
           <h2 className="s-title-light">Latest on<br /><em>Facebook</em></h2>
           <p>
             For the most current room availability, event announcements, promos, and booking
-            confirmations â€” everything happens on our Facebook page. Message us directly to reserve.
+            confirmations — everything happens on our Facebook page. Message us directly to reserve.
           </p>
           <div className="fb-actions">
             <a href="https://www.facebook.com/AlmejaAzulResort/" target="_blank" rel="noopener noreferrer" className="fb-primary">
@@ -227,7 +229,7 @@ export default function HomePage() {
               Message Us on Messenger
             </a>
             <a href="tel:09993088800" className="fb-phone">
-              <IconPhone size={15} /> Call Â· 0999 308 8800
+              <IconPhone size={15} /> Call · 0999 308 8800
             </a>
           </div>
         </div>
@@ -252,7 +254,7 @@ export default function HomePage() {
             rel="noopener noreferrer"
             className="fb-see-more"
           >
-            View all updates on Facebook â†’
+            View all updates on Facebook →
           </a>
         </div>
       </section>

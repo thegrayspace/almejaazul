@@ -1,20 +1,22 @@
-﻿import type { Metadata } from 'next';
 import '@/styles/pages/see.css';
 import SeeContent, { TourItem } from '@/components/public/SeeContent';
 import { prisma } from '@/lib/db';
+import { generateOgMetadata } from '@/lib/seo/og';
 import OptimizedImage from '@/components/public/OptimizedImage';
 import { resortImages } from '@/lib/image-assets';
 
-export const metadata: Metadata = {
+export const metadata = generateOgMetadata({
   title: 'See & Explore',
-  description: 'Island tours, reef snorkeling, mangrove kayaking, and natural wonders around Samal Island from Almeja Azul.',
-};
+  description:
+    'Island tours, reef snorkeling, mangrove kayaking, and natural wonders around Samal Island from Almeja Azul.',
+  path: '/see',
+});
 
 function formatPrice(price: number, mode: string, customText: string): string {
   if (mode === 'INQUIRE') return 'Inquire for rates';
   if (mode === 'ON_REQUEST') return 'On Request';
   if (mode === 'CUSTOM') return customText;
-  return `â‚±${price.toLocaleString()}`;
+  return `₱${price.toLocaleString()}`;
 }
 
 export default async function SeePage() {
@@ -33,7 +35,7 @@ export default async function SeePage() {
         mImg: t.modalImageUrl || t.imageUrl,
       }));
     }
-  } catch { /* DB unavailable â€” SeeContent will use built-in defaults */ }
+  } catch { /* DB unavailable — SeeContent will use built-in defaults */ }
 
   return (
     <>
@@ -47,14 +49,13 @@ export default async function SeePage() {
             fetchPriority="high"
             quality={50}
             sizes="100vw"
-            className="see-hero-img"
           />
         </div>
         <div className="see-hero-vgn" />
         <div className="see-hero-content">
           <p className="eyebrow">Island Experiences</p>
           <h1 className="s-title-light">Beyond the <em>shore.</em></h1>
-          <p className="sub">Island tours, reef snorkeling, mangrove kayaking, and the natural wonders of Samal â€” from the resort, all the way out.</p>
+          <p className="sub">Island tours, reef snorkeling, mangrove kayaking, and the natural wonders of Samal — from the resort, all the way out.</p>
         </div>
       </section>
       <SeeContent tours={tours} />

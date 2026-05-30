@@ -1,14 +1,16 @@
-﻿import type { Metadata } from 'next';
 import '@/styles/pages/fun.css';
 import FunContent, { ActivityItem } from '@/components/public/FunContent';
 import { prisma } from '@/lib/db';
+import { generateOgMetadata } from '@/lib/seo/og';
 import OptimizedImage from '@/components/public/OptimizedImage';
 import { resortImages } from '@/lib/image-assets';
 
-export const metadata: Metadata = {
+export const metadata = generateOgMetadata({
   title: 'Fun & Recreation',
-  description: 'Water sports, pickleball, kayaking, snorkeling, banana boat, pool, and beach recreation at Almeja Azul on Samal Island.',
-};
+  description:
+    'Water sports, pickleball, kayaking, snorkeling, banana boat, pool, and beach recreation at Almeja Azul on Samal Island.',
+  path: '/fun',
+});
 
 const CATEGORY_LABELS: Record<string, string> = {
   COURT_SPORT: 'Court Sport',
@@ -26,7 +28,7 @@ function formatPrice(price: number, mode: string, customText: string): string {
   if (mode === 'INCLUDED') return 'Included';
   if (mode === 'COMPLIMENTARY') return 'Complimentary';
   if (mode === 'CUSTOM') return customText;
-  return `â‚±${price.toLocaleString()}`;
+  return `₱${price.toLocaleString()}`;
 }
 
 export default async function FunPage() {
@@ -45,7 +47,7 @@ export default async function FunPage() {
         status: a.isPlaceholder ? 'request' : 'active',
       }));
     }
-  } catch { /* DB unavailable â€” FunContent will use built-in defaults */ }
+  } catch { /* DB unavailable — FunContent will use built-in defaults */ }
 
   return (
     <>
@@ -59,14 +61,13 @@ export default async function FunPage() {
             fetchPriority="high"
             quality={50}
             sizes="100vw"
-            className="page-hero-img"
           />
         </div>
         <div className="page-hero-vgn" />
         <div className="page-hero-content">
           <p className="hero-eyebrow">Recreation</p>
           <h1 className="s-title-light">Sports &amp; <em>Play</em></h1>
-          <p>Water sports, courts, pool, and beach â€” everything moving, all day long.</p>
+          <p>Water sports, courts, pool, and beach — everything moving, all day long.</p>
         </div>
       </section>
       <FunContent activities={activities} />

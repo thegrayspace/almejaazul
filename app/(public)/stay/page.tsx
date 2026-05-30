@@ -1,21 +1,22 @@
-﻿import type { Metadata } from 'next';
 import '@/styles/pages/stay.css';
 import StayGrid from '@/components/public/StayGrid';
 import { prisma } from '@/lib/db';
+import { generateOgMetadata } from '@/lib/seo/og';
 import OptimizedImage from '@/components/public/OptimizedImage';
 import { resortImages } from '@/lib/image-assets';
 
-export const metadata: Metadata = {
+export const metadata = generateOgMetadata({
   title: 'Rooms & Spaces',
   description:
     'Aircon rooms for 2 to 12 guests on Samal Island. All with full beach access, infinity pool, and high-speed fiber WiFi.',
-};
+  path: '/stay',
+});
 
 function formatPrice(amount: number, mode: string, suffix: string): string {
   if (mode === 'INQUIRE') return 'Inquire';
   if (mode === 'INCLUDED') return 'Included';
   if (mode === 'COMPLIMENTARY') return 'Complimentary';
-  return `â‚±${amount.toLocaleString()}`;
+  return `₱${amount.toLocaleString()}`;
 }
 
 export default async function StayPage() {
@@ -61,7 +62,7 @@ export default async function StayPage() {
       }));
     }
   } catch {
-    // DB unavailable â€” StayGrid will use built-in defaults
+    // DB unavailable — StayGrid will use built-in defaults
   }
 
   return (
@@ -76,7 +77,6 @@ export default async function StayPage() {
             fetchPriority="high"
             quality={50}
             sizes="100vw"
-            className="page-hero-img"
           />
         </div>
         <div className="page-hero-vgn" />

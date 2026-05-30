@@ -10,6 +10,7 @@ import {
 } from 'react';
 import OptimizedImage from './OptimizedImage';
 import { resortImages } from '@/lib/image-assets';
+import { pushDataLayer } from '@/lib/analytics/datalayer';
 
 const CC = [
   { v: '+63', t: '+63 Philippines' },
@@ -84,24 +85,44 @@ function InquiryModal({ state, onClose }: { state: ModalState; onClose: () => vo
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const eventId =
+      typeof crypto !== 'undefined' && 'randomUUID' in crypto
+        ? crypto.randomUUID()
+        : `inq_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+    const inquiryType = form.type || 'General Inquiry';
+    const sourcePage = typeof window !== 'undefined' ? window.location.pathname : '';
+    let ok = false;
     try {
-      await fetch('/api/inquiries', {
+      const res = await fetch('/api/inquiries', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: form.name,
           email: form.email,
           phone: form.cc + ' ' + form.phone,
-          inquiryType: form.type || 'General Inquiry',
+          inquiryType,
           guests: form.guests ? parseInt(form.guests) : undefined,
           arrivalDate: form.arrival || undefined,
           departureDate: form.departure || undefined,
-          sourcePage: window.location.pathname,
           message: form.message,
+          eventId,
+          sourcePage,
         }),
       });
+      ok = res.ok;
     } catch {
       // silently fail — show success anyway
+    }
+    if (ok) {
+      try {
+        pushDataLayer('InquirySubmitted', {
+          event_id: eventId,
+          inquiry_type: inquiryType,
+          source_page: sourcePage,
+        });
+      } catch {
+        // analytics must never block the success state
+      }
     }
     setDone(true);
   };

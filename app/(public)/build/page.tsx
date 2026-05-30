@@ -1,22 +1,24 @@
-﻿import type { Metadata } from 'next';
 import '@/styles/pages/build.css';
 import BuildTabs, { PackageItem, VenueItem } from '@/components/public/BuildTabs';
 import { prisma } from '@/lib/db';
+import { generateOgMetadata } from '@/lib/seo/og';
 import OptimizedImage from '@/components/public/OptimizedImage';
 import { resortImages } from '@/lib/image-assets';
 
 export const dynamic = 'force-dynamic';
 
-export const metadata: Metadata = {
+export const metadata = generateOgMetadata({
   title: 'Build Your Event',
-  description: 'Corporate retreats, team building, destination weddings, and private events at Almeja Azul on Samal Island.',
-};
+  description:
+    'Corporate retreats, team building, destination weddings, and private events at Almeja Azul on Samal Island.',
+  path: '/build',
+});
 
 function formatPrice(price: number, mode: string, customText: string): string {
-  if (mode === 'INQUIRE') return 'Custom package â€” message us';
+  if (mode === 'INQUIRE') return 'Custom package — message us';
   if (mode === 'ON_REQUEST') return 'On Request';
   if (mode === 'CUSTOM') return customText;
-  return `â‚±${price.toLocaleString()}`;
+  return `₱${price.toLocaleString()}`;
 }
 
 export default async function BuildPage() {
@@ -51,7 +53,7 @@ export default async function BuildPage() {
         img: v.imageUrl,
       }));
     }
-  } catch { /* DB unavailable â€” BuildTabs will use built-in defaults */ }
+  } catch { /* DB unavailable — BuildTabs will use built-in defaults */ }
 
   return (
     <>
@@ -65,14 +67,13 @@ export default async function BuildPage() {
             fetchPriority="high"
             quality={50}
             sizes="100vw"
-            className="page-hero-img"
           />
         </div>
         <div className="page-hero-vgn" />
         <div className="page-hero-content">
           <p className="hero-eyebrow">Events &amp; Weddings</p>
           <h1 className="s-title-light">Build Your <em>Event</em></h1>
-          <p>Corporate retreats, team building, destination weddings â€” built around your group.</p>
+          <p>Corporate retreats, team building, destination weddings — built around your group.</p>
         </div>
       </section>
       <BuildTabs packages={packages} venues={venues} />
