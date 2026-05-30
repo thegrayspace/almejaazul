@@ -23,6 +23,17 @@ function toAbsolute(url: string | null | undefined, fallback: string): string {
   return `${SITE_URL}/${value}`;
 }
 
+// The OG card only displays the photo in a 660px-wide panel, so fetching a
+// full-size source is wasteful and slow (it's the dominant cost of rendering).
+// For Unsplash/Cloudinary-style URLs, force a small width + moderate quality.
+function shrinkSource(url: string): string {
+  if (/images\.unsplash\.com/i.test(url)) {
+    const u = url.split('?')[0];
+    return `${u}?w=700&q=70&auto=format&fit=crop`;
+  }
+  return url;
+}
+
 function formatPrice(price: number, mode: string, custom: string): string {
   switch (mode) {
     case 'INQUIRE':       return 'Inquire for rates';
@@ -154,7 +165,7 @@ export async function GET(request: NextRequest) {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={card.imageUrl}
+            src={shrinkSource(card.imageUrl)}
             alt=""
             width={660}
             height={HEIGHT}
@@ -239,6 +250,11 @@ export async function GET(request: NextRequest) {
     {
       width: WIDTH,
       height: HEIGHT,
+      headers: {
+        // Cache aggressively at the CDN/scraper layer — entity cards only
+        // change when content does, and FB/Google re-scrape periodically.
+        'Cache-Control': 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800',
+      },
     },
   );
 }
