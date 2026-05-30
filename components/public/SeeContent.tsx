@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useInquiry } from './InquiryModal';
+import OptimizedImage from './OptimizedImage';
 
 export interface TourItem {
   id: string;
@@ -55,8 +56,7 @@ function TourModal({ tour, onClose }: { tour: Tour; onClose: () => void }) {
     >
       <div className="modal">
         <div className="m-gallery">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={tour.mImg || tour.img} alt={tour.name} />
+          <OptimizedImage src={tour.mImg || tour.img} alt={tour.name} width={1200} height={800} sizes="(max-width: 720px) 100vw, 50vw" />
           <button className="m-close" onClick={onClose}>✕</button>
         </div>
         <div className="m-body">
@@ -102,8 +102,14 @@ export default function SeeContent({ tours: dbTours }: { tours?: TourItem[] }) {
         <div className="tours-grid">
           {TOURS.map(tour => (
             <div key={tour.id} className="tour-card" onClick={() => setSelected(tour)}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="tour-img" src={tour.img} alt={tour.name} loading="lazy" />
+              <OptimizedImage
+                className="tour-img"
+                src={tour.img}
+                alt={tour.name}
+                width={700}
+                height={525}
+                sizes="(max-width: 720px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              />
               <div className="tour-body">
                 <p className="tour-tag">{tour.tag}</p>
                 <h3 className="tour-name">{tour.name}</h3>
@@ -127,8 +133,14 @@ export default function SeeContent({ tours: dbTours }: { tours?: TourItem[] }) {
         </p>
         <div className="samal-imgs">
           {TOURS.slice(0, 4).map(t => (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img key={t.id} src={t.img} alt={t.name} loading="lazy" />
+            <OptimizedImage
+              key={t.id}
+              src={t.img}
+              alt={t.name}
+              width={700}
+              height={525}
+              sizes="(max-width: 1024px) 50vw, 25vw"
+            />
           ))}
         </div>
       </section>
@@ -140,8 +152,7 @@ export default function SeeContent({ tours: dbTours }: { tours?: TourItem[] }) {
         <div className="nature-grid">
           {NATURE_SPOTS.map(spot => (
             <div key={spot.name} className="nature-card">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={spot.img} alt={spot.name} loading="lazy" />
+              <OptimizedImage src={spot.img} alt={spot.name} width={400} height={300} sizes="(max-width: 720px) 110px, 180px" />
               <div className="nature-body">
                 <p className="nature-tag">{spot.tag}</p>
                 <h3 className="nature-name">{spot.name}</h3>

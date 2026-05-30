@@ -1,0 +1,866 @@
+[
+  {
+    "route": "/",
+    "screenshot": "docs/audits/screenshots/after-home-mobile.png",
+    "lcp": null,
+    "perf": {
+      "domContentLoaded": 376,
+      "loadEventEnd": 990,
+      "firstPaint": 432,
+      "firstContentfulPaint": 432
+    },
+    "requestCount": 13,
+    "totalTransferKb": 9229,
+    "imageTransferKb": 38,
+    "heaviestImages": [
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fbeach-shore.webp&w=828&q=75",
+        "kb": 21,
+        "ms": 275
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fseaside-room.webp&w=390&q=75",
+        "kb": 7,
+        "ms": 102
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fbeach-shore.webp&w=390&q=75",
+        "kb": 6,
+        "ms": 101
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Falmeja-logo.webp&w=64&q=75",
+        "kb": 3,
+        "ms": 208
+      }
+    ],
+    "consoleMessages": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      },
+      {
+        "type": "warning",
+        "text": "Image with src \"/uploads/optimized/seaside-room.webp\" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: \"auto\"' or 'height: \"auto\"' to maintain the aspect ratio."
+      },
+      {
+        "type": "warning",
+        "text": "Image with src \"/uploads/optimized/beach-shore.webp\" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: \"auto\"' or 'height: \"auto\"' to maintain the aspect ratio."
+      },
+      {
+        "type": "warning",
+        "text": "Image with src \"/uploads/optimized/beach-shore.webp\" was detected as the Largest Contentful Paint (LCP). Please add the \"priority\" property if this image is above the fold.\nRead more: https://nextjs.org/docs/api-reference/next/image#priority"
+      },
+      {
+        "type": "warning",
+        "text": "Deprecated API for given entry type."
+      }
+    ],
+    "waterfall": [
+      {
+        "url": "/",
+        "type": "document",
+        "status": 200,
+        "ms": 376,
+        "kb": 115
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Falmeja-logo.webp&w=64&q=75",
+        "type": "image",
+        "status": 200,
+        "ms": 208,
+        "kb": 3
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fbeach-shore.webp&w=828&q=75",
+        "type": "image",
+        "status": 200,
+        "ms": 275,
+        "kb": 21
+      },
+      {
+        "url": "/_next/static/css/app/(public)/page.css?v=1779976448547",
+        "type": "stylesheet",
+        "status": 200,
+        "ms": 107,
+        "kb": 15
+      },
+      {
+        "url": "/_next/static/css/app/layout.css?v=1779976448547",
+        "type": "stylesheet",
+        "status": 200,
+        "ms": 108,
+        "kb": 21
+      },
+      {
+        "url": "/_next/static/chunks/webpack.js?v=1779976448547",
+        "type": "script",
+        "status": 200,
+        "ms": 211,
+        "kb": 138
+      },
+      {
+        "url": "/_next/static/chunks/app-pages-internals.js",
+        "type": "script",
+        "status": 200,
+        "ms": 213,
+        "kb": 248
+      },
+      {
+        "url": "/_next/static/chunks/app/(public)/layout.js",
+        "type": "script",
+        "status": 200,
+        "ms": 213,
+        "kb": 657
+      },
+      {
+        "url": "/_next/static/chunks/app/(public)/page.js",
+        "type": "script",
+        "status": 200,
+        "ms": 214,
+        "kb": 562
+      },
+      {
+        "url": "/_next/static/chunks/main-app.js?v=1779976448547",
+        "type": "script",
+        "status": 200,
+        "ms": 459,
+        "kb": 7430
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fbeach-shore.webp&w=390&q=75",
+        "type": "image",
+        "status": 200,
+        "ms": 101,
+        "kb": 6
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fseaside-room.webp&w=390&q=75",
+        "type": "image",
+        "status": 200,
+        "ms": 102,
+        "kb": 7
+      },
+      {
+        "url": "/_next/static/chunks/_app-pages-browser_node_modules_next_dist_client_dev_noop-turbopack-hmr_js.js",
+        "type": "script",
+        "status": 200,
+        "ms": 13,
+        "kb": 6
+      }
+    ]
+  },
+  {
+    "route": "/stay",
+    "screenshot": "docs/audits/screenshots/after-stay-mobile.png",
+    "lcp": null,
+    "perf": {
+      "domContentLoaded": 1098,
+      "loadEventEnd": 1675,
+      "firstPaint": 1112,
+      "firstContentfulPaint": 1112
+    },
+    "requestCount": 16,
+    "totalTransferKb": 9871,
+    "imageTransferKb": 161,
+    "heaviestImages": [
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fgrand-room.webp&w=828&q=75",
+        "kb": 95,
+        "ms": 314
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Ffamily-room.webp&w=390&q=75",
+        "kb": 20,
+        "ms": 127
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fextended-room.webp&w=390&q=75",
+        "kb": 19,
+        "ms": 134
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fgroup-suite.webp&w=390&q=75",
+        "kb": 17,
+        "ms": 143
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fseaside-room.webp&w=390&q=75",
+        "kb": 7,
+        "ms": 37
+      }
+    ],
+    "consoleMessages": [
+      {
+        "type": "warning",
+        "text": "Image with src \"/uploads/optimized/family-room.webp\" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: \"auto\"' or 'height: \"auto\"' to maintain the aspect ratio."
+      },
+      {
+        "type": "warning",
+        "text": "Image with src \"/uploads/optimized/group-suite.webp\" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: \"auto\"' or 'height: \"auto\"' to maintain the aspect ratio."
+      },
+      {
+        "type": "warning",
+        "text": "Image with src \"/uploads/optimized/extended-room.webp\" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: \"auto\"' or 'height: \"auto\"' to maintain the aspect ratio."
+      },
+      {
+        "type": "warning",
+        "text": "Image with src \"/uploads/optimized/grand-room.webp\" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: \"auto\"' or 'height: \"auto\"' to maintain the aspect ratio."
+      },
+      {
+        "type": "warning",
+        "text": "Deprecated API for given entry type."
+      }
+    ],
+    "waterfall": [
+      {
+        "url": "/stay",
+        "type": "document",
+        "status": 200,
+        "ms": 1099,
+        "kb": 66
+      },
+      {
+        "url": "/_next/static/css/app/layout.css?v=1779976454621",
+        "type": "stylesheet",
+        "status": 200,
+        "ms": 14,
+        "kb": 21
+      },
+      {
+        "url": "/_next/static/css/app/(public)/stay/page.css?v=1779976454621",
+        "type": "stylesheet",
+        "status": 200,
+        "ms": 24,
+        "kb": 6
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Falmeja-logo.webp&w=64&q=75",
+        "type": "image",
+        "status": 200,
+        "ms": 14,
+        "kb": 3
+      },
+      {
+        "url": "/_next/static/chunks/webpack.js?v=1779976454621",
+        "type": "script",
+        "status": 200,
+        "ms": 95,
+        "kb": 138
+      },
+      {
+        "url": "/_next/static/chunks/app-pages-internals.js",
+        "type": "script",
+        "status": 200,
+        "ms": 95,
+        "kb": 248
+      },
+      {
+        "url": "/_next/static/chunks/app/(public)/layout.js",
+        "type": "script",
+        "status": 200,
+        "ms": 96,
+        "kb": 657
+      },
+      {
+        "url": "/_next/static/chunks/app/(public)/page.js",
+        "type": "script",
+        "status": 200,
+        "ms": 96,
+        "kb": 562
+      },
+      {
+        "url": "/_next/static/chunks/app/(public)/stay/page.js",
+        "type": "script",
+        "status": 200,
+        "ms": 101,
+        "kb": 578
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fgrand-room.webp&w=828&q=75",
+        "type": "image",
+        "status": 200,
+        "ms": 314,
+        "kb": 95
+      },
+      {
+        "url": "/_next/static/chunks/main-app.js?v=1779976454621",
+        "type": "script",
+        "status": 200,
+        "ms": 366,
+        "kb": 7430
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fseaside-room.webp&w=390&q=75",
+        "type": "image",
+        "status": 200,
+        "ms": 37,
+        "kb": 7
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Ffamily-room.webp&w=390&q=75",
+        "type": "image",
+        "status": 200,
+        "ms": 127,
+        "kb": 20
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fgroup-suite.webp&w=390&q=75",
+        "type": "image",
+        "status": 200,
+        "ms": 143,
+        "kb": 17
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fextended-room.webp&w=390&q=75",
+        "type": "image",
+        "status": 200,
+        "ms": 134,
+        "kb": 19
+      },
+      {
+        "url": "/_next/static/chunks/_app-pages-browser_node_modules_next_dist_client_dev_noop-turbopack-hmr_js.js",
+        "type": "script",
+        "status": 200,
+        "ms": 9,
+        "kb": 6
+      }
+    ]
+  },
+  {
+    "route": "/day-tour",
+    "screenshot": "docs/audits/screenshots/after-day-tour-mobile.png",
+    "lcp": null,
+    "perf": {
+      "domContentLoaded": 835,
+      "loadEventEnd": 1294,
+      "firstPaint": 932,
+      "firstContentfulPaint": 932
+    },
+    "requestCount": 12,
+    "totalTransferKb": 9743,
+    "imageTransferKb": 25,
+    "heaviestImages": [
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fbeach-shore.webp&w=828&q=75",
+        "kb": 21,
+        "ms": 18
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Falmeja-logo.webp&w=64&q=75",
+        "kb": 3,
+        "ms": 18
+      }
+    ],
+    "consoleMessages": [
+      {
+        "type": "warning",
+        "text": "Image with src \"/uploads/optimized/beach-shore.webp\" was detected as the Largest Contentful Paint (LCP). Please add the \"priority\" property if this image is above the fold.\nRead more: https://nextjs.org/docs/api-reference/next/image#priority"
+      },
+      {
+        "type": "warning",
+        "text": "Deprecated API for given entry type."
+      }
+    ],
+    "waterfall": [
+      {
+        "url": "/day-tour",
+        "type": "document",
+        "status": 200,
+        "ms": 837,
+        "kb": 65
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Falmeja-logo.webp&w=64&q=75",
+        "type": "image",
+        "status": 200,
+        "ms": 18,
+        "kb": 3
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fbeach-shore.webp&w=828&q=75",
+        "type": "image",
+        "status": 200,
+        "ms": 18,
+        "kb": 21
+      },
+      {
+        "url": "/_next/static/css/app/layout.css?v=1779976460326",
+        "type": "stylesheet",
+        "status": 200,
+        "ms": 18,
+        "kb": 21
+      },
+      {
+        "url": "/_next/static/css/app/(public)/day-tour/page.css?v=1779976460326",
+        "type": "stylesheet",
+        "status": 200,
+        "ms": 19,
+        "kb": 6
+      },
+      {
+        "url": "/_next/static/chunks/webpack.js?v=1779976460326",
+        "type": "script",
+        "status": 200,
+        "ms": 82,
+        "kb": 138
+      },
+      {
+        "url": "/_next/static/chunks/app-pages-internals.js",
+        "type": "script",
+        "status": 200,
+        "ms": 83,
+        "kb": 248
+      },
+      {
+        "url": "/_next/static/chunks/app/(public)/layout.js",
+        "type": "script",
+        "status": 200,
+        "ms": 83,
+        "kb": 657
+      },
+      {
+        "url": "/_next/static/chunks/app/(public)/page.js",
+        "type": "script",
+        "status": 200,
+        "ms": 85,
+        "kb": 562
+      },
+      {
+        "url": "/_next/static/chunks/app/(public)/day-tour/page.js",
+        "type": "script",
+        "status": 200,
+        "ms": 85,
+        "kb": 586
+      },
+      {
+        "url": "/_next/static/chunks/main-app.js?v=1779976460326",
+        "type": "script",
+        "status": 200,
+        "ms": 223,
+        "kb": 7430
+      },
+      {
+        "url": "/_next/static/chunks/_app-pages-browser_node_modules_next_dist_client_dev_noop-turbopack-hmr_js.js",
+        "type": "script",
+        "status": 200,
+        "ms": 14,
+        "kb": 6
+      }
+    ]
+  },
+  {
+    "route": "/fun",
+    "screenshot": "docs/audits/screenshots/after-fun-mobile.png",
+    "lcp": null,
+    "perf": {
+      "domContentLoaded": 730,
+      "loadEventEnd": 1277,
+      "firstPaint": 740,
+      "firstContentfulPaint": 740
+    },
+    "requestCount": 14,
+    "totalTransferKb": 9741,
+    "imageTransferKb": 86,
+    "heaviestImages": [
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fpickleball-courts.webp&w=828&q=75",
+        "kb": 36,
+        "ms": 197
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fwater-sports.webp&w=828&q=75",
+        "kb": 23,
+        "ms": 193
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fjet-ski.webp&w=828&q=75",
+        "kb": 23,
+        "ms": 180
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Falmeja-logo.webp&w=64&q=75",
+        "kb": 3,
+        "ms": 14
+      }
+    ],
+    "consoleMessages": [
+      {
+        "type": "warning",
+        "text": "Image with src \"/uploads/optimized/water-sports.webp\" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: \"auto\"' or 'height: \"auto\"' to maintain the aspect ratio."
+      },
+      {
+        "type": "warning",
+        "text": "Image with src \"/uploads/optimized/jet-ski.webp\" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: \"auto\"' or 'height: \"auto\"' to maintain the aspect ratio."
+      },
+      {
+        "type": "warning",
+        "text": "Image with src \"/uploads/optimized/pickleball-courts.webp\" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: \"auto\"' or 'height: \"auto\"' to maintain the aspect ratio."
+      },
+      {
+        "type": "warning",
+        "text": "Deprecated API for given entry type."
+      }
+    ],
+    "waterfall": [
+      {
+        "url": "/fun",
+        "type": "document",
+        "status": 200,
+        "ms": 730,
+        "kb": 64
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Falmeja-logo.webp&w=64&q=75",
+        "type": "image",
+        "status": 200,
+        "ms": 14,
+        "kb": 3
+      },
+      {
+        "url": "/_next/static/css/app/layout.css?v=1779976465563",
+        "type": "stylesheet",
+        "status": 200,
+        "ms": 17,
+        "kb": 21
+      },
+      {
+        "url": "/_next/static/css/app/(public)/fun/page.css?v=1779976465563",
+        "type": "stylesheet",
+        "status": 200,
+        "ms": 20,
+        "kb": 7
+      },
+      {
+        "url": "/_next/static/chunks/webpack.js?v=1779976465563",
+        "type": "script",
+        "status": 200,
+        "ms": 84,
+        "kb": 138
+      },
+      {
+        "url": "/_next/static/chunks/app-pages-internals.js",
+        "type": "script",
+        "status": 200,
+        "ms": 85,
+        "kb": 248
+      },
+      {
+        "url": "/_next/static/chunks/app/(public)/layout.js",
+        "type": "script",
+        "status": 200,
+        "ms": 86,
+        "kb": 657
+      },
+      {
+        "url": "/_next/static/chunks/app/(public)/page.js",
+        "type": "script",
+        "status": 200,
+        "ms": 86,
+        "kb": 562
+      },
+      {
+        "url": "/_next/static/chunks/app/(public)/fun/page.js",
+        "type": "script",
+        "status": 200,
+        "ms": 87,
+        "kb": 522
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fwater-sports.webp&w=828&q=75",
+        "type": "image",
+        "status": 200,
+        "ms": 193,
+        "kb": 23
+      },
+      {
+        "url": "/_next/static/chunks/main-app.js?v=1779976465563",
+        "type": "script",
+        "status": 200,
+        "ms": 296,
+        "kb": 7430
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fjet-ski.webp&w=828&q=75",
+        "type": "image",
+        "status": 200,
+        "ms": 180,
+        "kb": 23
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fpickleball-courts.webp&w=828&q=75",
+        "type": "image",
+        "status": 200,
+        "ms": 197,
+        "kb": 36
+      },
+      {
+        "url": "/_next/static/chunks/_app-pages-browser_node_modules_next_dist_client_dev_noop-turbopack-hmr_js.js",
+        "type": "script",
+        "status": 200,
+        "ms": 10,
+        "kb": 6
+      }
+    ]
+  },
+  {
+    "route": "/build",
+    "screenshot": "docs/audits/screenshots/after-build-mobile.png",
+    "lcp": null,
+    "perf": {
+      "domContentLoaded": 732,
+      "loadEventEnd": 1208,
+      "firstPaint": 756,
+      "firstContentfulPaint": 756
+    },
+    "requestCount": 12,
+    "totalTransferKb": 9826,
+    "imageTransferKb": 42,
+    "heaviestImages": [
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fcorporate-retreat.webp&w=828&q=75",
+        "kb": 38,
+        "ms": 199
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Falmeja-logo.webp&w=64&q=75",
+        "kb": 3,
+        "ms": 11
+      }
+    ],
+    "consoleMessages": [
+      {
+        "type": "warning",
+        "text": "Image with src \"/uploads/optimized/corporate-retreat.webp\" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: \"auto\"' or 'height: \"auto\"' to maintain the aspect ratio."
+      },
+      {
+        "type": "warning",
+        "text": "Deprecated API for given entry type."
+      }
+    ],
+    "waterfall": [
+      {
+        "url": "/build",
+        "type": "document",
+        "status": 200,
+        "ms": 732,
+        "kb": 54
+      },
+      {
+        "url": "/_next/static/css/app/layout.css?v=1779976471449",
+        "type": "stylesheet",
+        "status": 200,
+        "ms": 15,
+        "kb": 21
+      },
+      {
+        "url": "/_next/static/css/app/(public)/build/page.css?v=1779976471449",
+        "type": "stylesheet",
+        "status": 200,
+        "ms": 18,
+        "kb": 8
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Falmeja-logo.webp&w=64&q=75",
+        "type": "image",
+        "status": 200,
+        "ms": 11,
+        "kb": 3
+      },
+      {
+        "url": "/_next/static/chunks/webpack.js?v=1779976471449",
+        "type": "script",
+        "status": 200,
+        "ms": 79,
+        "kb": 138
+      },
+      {
+        "url": "/_next/static/chunks/app-pages-internals.js",
+        "type": "script",
+        "status": 200,
+        "ms": 80,
+        "kb": 248
+      },
+      {
+        "url": "/_next/static/chunks/app/(public)/layout.js",
+        "type": "script",
+        "status": 200,
+        "ms": 83,
+        "kb": 657
+      },
+      {
+        "url": "/_next/static/chunks/app/(public)/page.js",
+        "type": "script",
+        "status": 200,
+        "ms": 83,
+        "kb": 562
+      },
+      {
+        "url": "/_next/static/chunks/app/(public)/build/page.js",
+        "type": "script",
+        "status": 200,
+        "ms": 84,
+        "kb": 661
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Fcorporate-retreat.webp&w=828&q=75",
+        "type": "image",
+        "status": 200,
+        "ms": 199,
+        "kb": 38
+      },
+      {
+        "url": "/_next/static/chunks/main-app.js?v=1779976471449",
+        "type": "script",
+        "status": 200,
+        "ms": 237,
+        "kb": 7430
+      },
+      {
+        "url": "/_next/static/chunks/_app-pages-browser_node_modules_next_dist_client_dev_noop-turbopack-hmr_js.js",
+        "type": "script",
+        "status": 200,
+        "ms": 9,
+        "kb": 6
+      }
+    ]
+  },
+  {
+    "route": "/see",
+    "screenshot": "docs/audits/screenshots/after-see-mobile.png",
+    "lcp": null,
+    "perf": {
+      "domContentLoaded": 855,
+      "loadEventEnd": 1420,
+      "firstPaint": 872,
+      "firstContentfulPaint": 872
+    },
+    "requestCount": 13,
+    "totalTransferKb": 9819,
+    "imageTransferKb": 132,
+    "heaviestImages": [
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Freef-snorkel.webp&w=828&q=75",
+        "kb": 71,
+        "ms": 400
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Freef-water.webp&w=828&q=75",
+        "kb": 57,
+        "ms": 480
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Falmeja-logo.webp&w=64&q=75",
+        "kb": 3,
+        "ms": 12
+      }
+    ],
+    "consoleMessages": [
+      {
+        "type": "warning",
+        "text": "Image with src \"/uploads/optimized/reef-water.webp\" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: \"auto\"' or 'height: \"auto\"' to maintain the aspect ratio."
+      },
+      {
+        "type": "warning",
+        "text": "Image with src \"/uploads/optimized/reef-snorkel.webp\" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: \"auto\"' or 'height: \"auto\"' to maintain the aspect ratio."
+      },
+      {
+        "type": "warning",
+        "text": "Deprecated API for given entry type."
+      }
+    ],
+    "waterfall": [
+      {
+        "url": "/see",
+        "type": "document",
+        "status": 200,
+        "ms": 855,
+        "kb": 70
+      },
+      {
+        "url": "/_next/static/css/app/layout.css?v=1779976476637",
+        "type": "stylesheet",
+        "status": 200,
+        "ms": 13,
+        "kb": 21
+      },
+      {
+        "url": "/_next/static/css/app/(public)/see/page.css?v=1779976476637",
+        "type": "stylesheet",
+        "status": 200,
+        "ms": 18,
+        "kb": 5
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Falmeja-logo.webp&w=64&q=75",
+        "type": "image",
+        "status": 200,
+        "ms": 12,
+        "kb": 3
+      },
+      {
+        "url": "/_next/static/chunks/webpack.js?v=1779976476637",
+        "type": "script",
+        "status": 200,
+        "ms": 82,
+        "kb": 138
+      },
+      {
+        "url": "/_next/static/chunks/app-pages-internals.js",
+        "type": "script",
+        "status": 200,
+        "ms": 83,
+        "kb": 248
+      },
+      {
+        "url": "/_next/static/chunks/app/(public)/layout.js",
+        "type": "script",
+        "status": 200,
+        "ms": 85,
+        "kb": 657
+      },
+      {
+        "url": "/_next/static/chunks/app/(public)/page.js",
+        "type": "script",
+        "status": 200,
+        "ms": 85,
+        "kb": 562
+      },
+      {
+        "url": "/_next/static/chunks/app/(public)/see/page.js",
+        "type": "script",
+        "status": 200,
+        "ms": 85,
+        "kb": 550
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Freef-water.webp&w=828&q=75",
+        "type": "image",
+        "status": 200,
+        "ms": 480,
+        "kb": 57
+      },
+      {
+        "url": "/_next/static/chunks/main-app.js?v=1779976476637",
+        "type": "script",
+        "status": 200,
+        "ms": 279,
+        "kb": 7430
+      },
+      {
+        "url": "/_next/image?url=%2Fuploads%2Foptimized%2Freef-snorkel.webp&w=828&q=75",
+        "type": "image",
+        "status": 200,
+        "ms": 400,
+        "kb": 71
+      },
+      {
+        "url": "/_next/static/chunks/_app-pages-browser_node_modules_next_dist_client_dev_noop-turbopack-hmr_js.js",
+        "type": "script",
+        "status": 200,
+        "ms": 13,
+        "kb": 6
+      }
+    ]
+  }
+]

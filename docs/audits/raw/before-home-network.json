@@ -1,0 +1,221 @@
+{
+  "route": "/",
+  "screenshot": "docs/audits/screenshots/before-home-mobile.png",
+  "lcp": null,
+  "perf": {
+    "domContentLoaded": 1946,
+    "loadEventEnd": 4001,
+    "firstPaint": 2748,
+    "firstContentfulPaint": 2748
+  },
+  "requestCount": 24,
+  "totalTransferKb": 13736,
+  "imageTransferKb": 5092,
+  "heaviestImages": [
+    {
+      "url": "/uploads/Almeja_Logo_Large_PNG.png",
+      "kb": 3444,
+      "ms": 123
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=2000&q=85",
+      "kb": 746,
+      "ms": 762
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=2400&q=90",
+      "kb": 464,
+      "ms": 760
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1511578314322-379afb476865?w=900&q=85",
+      "kb": 117,
+      "ms": 871
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80",
+      "kb": 70,
+      "ms": 764
+    }
+  ],
+  "consoleMessages": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "warning",
+      "text": "Deprecated API for given entry type."
+    }
+  ],
+  "waterfall": [
+    {
+      "url": "/",
+      "type": "document",
+      "status": 200,
+      "ms": 1945,
+      "kb": 100
+    },
+    {
+      "url": "/_next/static/css/app/layout.css?v=1779975558046",
+      "type": "stylesheet",
+      "status": 200,
+      "ms": 20,
+      "kb": 41
+    },
+    {
+      "url": "/_next/static/css/app/(public)/page.css?v=1779975558046",
+      "type": "stylesheet",
+      "status": 200,
+      "ms": 22,
+      "kb": 15
+    },
+    {
+      "url": "/uploads/Almeja_Logo_Large_PNG.png",
+      "type": "image",
+      "status": 200,
+      "ms": 123,
+      "kb": 3444
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=85",
+      "type": "image",
+      "status": 200,
+      "ms": 871,
+      "kb": 59
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1511578314322-379afb476865?w=900&q=85",
+      "type": "image",
+      "status": 200,
+      "ms": 871,
+      "kb": 117
+    },
+    {
+      "url": "/_next/static/chunks/webpack.js?v=1779975558046",
+      "type": "script",
+      "status": 200,
+      "ms": 114,
+      "kb": 138
+    },
+    {
+      "url": "/_next/static/chunks/main-app.js?v=1779975558046",
+      "type": "script",
+      "status": 200,
+      "ms": 893,
+      "kb": 7425
+    },
+    {
+      "url": "/_next/static/chunks/app-pages-internals.js",
+      "type": "script",
+      "status": 200,
+      "ms": 113,
+      "kb": 244
+    },
+    {
+      "url": "/_next/static/chunks/app/(public)/page.js",
+      "type": "script",
+      "status": 200,
+      "ms": 114,
+      "kb": 209
+    },
+    {
+      "url": "/_next/static/chunks/app/(public)/layout.js",
+      "type": "script",
+      "status": 200,
+      "ms": 119,
+      "kb": 310
+    },
+    {
+      "url": "/_next/static/media/636a5ac981f94f8b-s.p.woff2",
+      "type": "font",
+      "status": 200,
+      "ms": 757,
+      "kb": 27
+    },
+    {
+      "url": "/_next/static/media/9e7b0a821b9dfcb4-s.woff2",
+      "type": "font",
+      "status": 200,
+      "ms": 757,
+      "kb": 21
+    },
+    {
+      "url": "/_next/static/media/e18f83c737786aa7-s.p.woff2",
+      "type": "font",
+      "status": 200,
+      "ms": 758,
+      "kb": 38
+    },
+    {
+      "url": "/_next/static/media/48410f3df60da620-s.woff2",
+      "type": "font",
+      "status": 200,
+      "ms": 759,
+      "kb": 33
+    },
+    {
+      "url": "/_next/static/media/7b89a4fd5e90ede0-s.p.woff2",
+      "type": "font",
+      "status": 200,
+      "ms": 759,
+      "kb": 37
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=2400&q=90",
+      "type": "image",
+      "status": 200,
+      "ms": 760,
+      "kb": 464
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=2000&q=85",
+      "type": "image",
+      "status": 200,
+      "ms": 762,
+      "kb": 746
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80",
+      "type": "image",
+      "status": 200,
+      "ms": 763,
+      "kb": 39
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80",
+      "type": "image",
+      "status": 200,
+      "ms": 761,
+      "kb": 38
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=600&q=80",
+      "type": "image",
+      "status": 200,
+      "ms": 762,
+      "kb": 56
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&q=80",
+      "type": "image",
+      "status": 200,
+      "ms": 764,
+      "kb": 59
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80",
+      "type": "image",
+      "status": 200,
+      "ms": 764,
+      "kb": 70
+    },
+    {
+      "url": "/_next/static/chunks/_app-pages-browser_node_modules_next_dist_client_dev_noop-turbopack-hmr_js.js",
+      "type": "script",
+      "status": 200,
+      "ms": 11,
+      "kb": 6
+    }
+  ]
+}

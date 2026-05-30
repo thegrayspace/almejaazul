@@ -1,5 +1,6 @@
 .see-hero{height:70vh;min-height:500px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:0 72px 88px;}
-.see-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center 45%;animation:hZoom 20s ease-in-out infinite alternate;}
+.see-hero-bg{position:absolute;inset:0;animation:hZoom 20s ease-in-out infinite alternate;}
+.see-hero-img{object-fit:cover;object-position:center 45%;}
 .see-hero-vgn{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,37,48,0.90) 0%,rgba(26,37,48,0.2) 60%,transparent 100%);}
 .see-hero-content{position:relative;z-index:1;max-width:680px;}
 .see-hero-content .eyebrow{font-size:10px;font-weight:600;letter-spacing:0.26em;text-transform:uppercase;color:var(--c-brand);margin-bottom:16px;opacity:0;transform:translateY(12px);animation:fUp 0.9s var(--ease) 0.3s forwards;}
@@ -46,6 +47,7 @@
 }
 @media (max-width: 720px) {
   .see-hero { padding: 0 24px 64px; min-height: 420px; }
+  .see-hero-content .eyebrow, .see-hero-content h1, .see-hero-content .sub { opacity: 1; transform: none; animation: none; }
   .tours-section, .samal-section, .nature-section { padding: 56px 24px; }
   .tours-grid { grid-template-columns: 1fr; gap: 14px; }
   .tour-body { padding: 18px 20px 22px; }

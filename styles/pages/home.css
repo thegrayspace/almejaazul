@@ -1,6 +1,7 @@
 /* ── HERO ── */
 .hero { height:100vh; min-height:680px; position:relative; overflow:hidden; display:flex; align-items:flex-end; padding:0 72px 88px; }
-.hero-bg { position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=2400&q=90') center 35%/cover; animation:hZoom 20s ease-in-out infinite alternate; }
+.hero-bg { position:absolute; inset:0; animation:hZoom 20s ease-in-out infinite alternate; }
+.hero-bg-img { object-fit:cover; object-position:center 35%; }
 @keyframes hZoom { from{transform:scale(1.04)} to{transform:scale(1.10) translateX(-1%)} }
 .hero-vgn { position:absolute; inset:0; background:linear-gradient(to top,rgba(26,37,48,0.92) 0%,rgba(26,37,48,0.25) 55%,transparent 100%),linear-gradient(to right,rgba(26,37,48,0.6) 0%,transparent 60%); }
 .hero-content { position:relative; z-index:1; max-width:860px; }
@@ -53,7 +54,8 @@
 
 /* ── MANGROVE ── */
 .mangrove { height:600px; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; }
-.mg-bg { position:absolute; inset:-15% 0; background:url('https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=2000&q=85') center/cover; transition:transform 0.1s linear; will-change:transform; }
+.mg-bg { position:absolute; inset:-15% 0; transition:transform 0.1s linear; will-change:transform; }
+.mg-bg-img { object-fit:cover; object-position:center; }
 .mg-vgn { position:absolute; inset:0; background:linear-gradient(to right,rgba(26,37,48,0.88) 0%,rgba(26,37,48,0.45) 50%,rgba(26,37,48,0.65) 100%),linear-gradient(to bottom,rgba(26,37,48,0.3),transparent 30%,transparent 70%,rgba(26,37,48,0.5)); }
 .mg-content { position:relative; z-index:1; max-width:760px; text-align:center; padding:0 40px; }
 .mg-content .s-eyebrow-light { text-align:center; display:block; }
@@ -118,6 +120,7 @@
 }
 @media (max-width: 720px) {
   .hero { padding: 0 24px 60px; min-height: 600px; }
+  .hero-eyebrow, .hero-title .lni, .hero-sub, .hero-acts { opacity: 1; transform: none; animation: none; }
   .hero-title { font-size: clamp(44px, 11vw, 64px) !important; margin-bottom: 24px; }
   .hero-sub { font-size: 14px; max-width: 100%; margin-bottom: 28px; }
   .hero-acts { flex-direction: column; align-items: stretch; gap: 10px; }

@@ -1,0 +1,177 @@
+{
+  "route": "/day-tour",
+  "screenshot": "docs/audits/screenshots/before-day-tour-mobile.png",
+  "lcp": null,
+  "perf": {
+    "domContentLoaded": 853,
+    "loadEventEnd": 2693,
+    "firstPaint": 1640,
+    "firstContentfulPaint": 1640
+  },
+  "requestCount": 19,
+  "totalTransferKb": 12866,
+  "imageTransferKb": 4049,
+  "heaviestImages": [
+    {
+      "url": "/uploads/Almeja_Logo_Large_PNG.png",
+      "kb": 3444,
+      "ms": 113
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=2400&q=90",
+      "kb": 464,
+      "ms": 669
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=700&q=80",
+      "kb": 91,
+      "ms": 770
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=700&q=80",
+      "kb": 51,
+      "ms": 772
+    }
+  ],
+  "consoleMessages": [
+    {
+      "type": "warning",
+      "text": "Deprecated API for given entry type."
+    }
+  ],
+  "waterfall": [
+    {
+      "url": "/day-tour",
+      "type": "document",
+      "status": 200,
+      "ms": 854,
+      "kb": 66
+    },
+    {
+      "url": "/_next/static/css/app/layout.css?v=1779975573908",
+      "type": "stylesheet",
+      "status": 200,
+      "ms": 12,
+      "kb": 41
+    },
+    {
+      "url": "/_next/static/css/app/(public)/day-tour/page.css?v=1779975573908",
+      "type": "stylesheet",
+      "status": 200,
+      "ms": 19,
+      "kb": 6
+    },
+    {
+      "url": "/uploads/Almeja_Logo_Large_PNG.png",
+      "type": "image",
+      "status": 200,
+      "ms": 113,
+      "kb": 3444
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=700&q=80",
+      "type": "image",
+      "status": 200,
+      "ms": 770,
+      "kb": 91
+    },
+    {
+      "url": "/_next/static/chunks/webpack.js?v=1779975573908",
+      "type": "script",
+      "status": 200,
+      "ms": 107,
+      "kb": 138
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=700&q=80",
+      "type": "image",
+      "status": 200,
+      "ms": 772,
+      "kb": 51
+    },
+    {
+      "url": "/_next/static/chunks/app-pages-internals.js",
+      "type": "script",
+      "status": 200,
+      "ms": 108,
+      "kb": 244
+    },
+    {
+      "url": "/_next/static/chunks/app/(public)/layout.js",
+      "type": "script",
+      "status": 200,
+      "ms": 109,
+      "kb": 310
+    },
+    {
+      "url": "/_next/static/chunks/app/(public)/page.js",
+      "type": "script",
+      "status": 200,
+      "ms": 110,
+      "kb": 209
+    },
+    {
+      "url": "/_next/static/chunks/app/(public)/day-tour/page.js",
+      "type": "script",
+      "status": 200,
+      "ms": 110,
+      "kb": 216
+    },
+    {
+      "url": "/_next/static/chunks/main-app.js?v=1779975573908",
+      "type": "script",
+      "status": 200,
+      "ms": 792,
+      "kb": 7425
+    },
+    {
+      "url": "/_next/static/media/7b89a4fd5e90ede0-s.p.woff2",
+      "type": "font",
+      "status": 200,
+      "ms": 666,
+      "kb": 37
+    },
+    {
+      "url": "/_next/static/media/e18f83c737786aa7-s.p.woff2",
+      "type": "font",
+      "status": 200,
+      "ms": 666,
+      "kb": 38
+    },
+    {
+      "url": "/_next/static/media/48410f3df60da620-s.woff2",
+      "type": "font",
+      "status": 200,
+      "ms": 667,
+      "kb": 33
+    },
+    {
+      "url": "/_next/static/media/636a5ac981f94f8b-s.p.woff2",
+      "type": "font",
+      "status": 200,
+      "ms": 667,
+      "kb": 27
+    },
+    {
+      "url": "/_next/static/media/9e7b0a821b9dfcb4-s.woff2",
+      "type": "font",
+      "status": 200,
+      "ms": 667,
+      "kb": 21
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=2400&q=90",
+      "type": "image",
+      "status": 200,
+      "ms": 669,
+      "kb": 464
+    },
+    {
+      "url": "/_next/static/chunks/_app-pages-browser_node_modules_next_dist_client_dev_noop-turbopack-hmr_js.js",
+      "type": "script",
+      "status": 200,
+      "ms": 8,
+      "kb": 6
+    }
+  ]
+}

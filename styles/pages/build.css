@@ -1,5 +1,6 @@
 .page-hero{height:70vh;min-height:520px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:0 72px 88px;}
-.page-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;}
+.page-hero-bg{position:absolute;inset:0;}
+.page-hero-img{object-fit:cover;object-position:center;}
 .page-hero-vgn{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,37,48,0.92) 0%,rgba(26,37,48,0.25) 60%,transparent 100%);}
 .page-hero-content{position:relative;z-index:1;max-width:680px;}
 .page-hero-content p.eyebrow{font-size:10px;font-weight:600;letter-spacing:0.26em;text-transform:uppercase;color:var(--c-brand);margin-bottom:16px;opacity:0;transform:translateY(12px);animation:fUp 0.9s var(--ease) 0.3s forwards;}
@@ -69,6 +70,7 @@
 }
 @media (max-width: 720px) {
   .page-hero { padding: 0 24px 64px; min-height: 460px; }
+  .page-hero-content p.eyebrow, .page-hero-content h1, .page-hero-content .sub { opacity: 1; transform: none; animation: none; }
   .tab-nav { padding: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .tab-btn { padding: 14px 18px; font-size: 10px; white-space: nowrap; flex-shrink: 0; }
   .corp-section, .floorplan-section, .wed-section, .inquiry-section { padding: 56px 24px; }

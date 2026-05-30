@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useInquiry } from './InquiryModal';
+import OptimizedImage from './OptimizedImage';
 
 interface Item {
   id: number | string;
@@ -44,8 +45,7 @@ function Modal({ item, onClose }: { item: Item; onClose: () => void }) {
     >
       <div className="modal">
         <div className="m-gallery">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={item.mImg || item.img} alt={item.name} />
+          <OptimizedImage src={item.mImg || item.img} alt={item.name} width={1200} height={800} sizes="(max-width: 720px) 100vw, 50vw" />
           <button className="m-close" onClick={onClose}>✕</button>
         </div>
         <div className="m-body">
@@ -134,8 +134,14 @@ export default function StayGrid({ rooms: roomsProp, spaces: spacesProp }: StayG
               onClick={() => setSelected(r)}
             >
               <div style={{ overflow: 'hidden', position: 'relative', flex: 1 }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img className="rc-img" src={r.img} alt={r.name} loading="lazy" />
+                <OptimizedImage
+                  className="rc-img"
+                  src={r.img}
+                  alt={r.name}
+                  width={900}
+                  height={600}
+                  sizes="(max-width: 720px) 50vw, (max-width: 1024px) 50vw, 33vw"
+                />
               </div>
               <div className="rc-body" style={{ flex: r.layoutSize === 'feature' ? '0 0 auto' : 'unset' }}>
                 <p className="rc-tag">{r.tag}</p>
@@ -160,8 +166,13 @@ export default function StayGrid({ rooms: roomsProp, spaces: spacesProp }: StayG
         <div className="spaces-grid">
           {spaceList.map(s => (
             <div key={s.id} className="space-card rpl" onClick={() => setSelected(s)}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={s.img} alt={s.name} loading="lazy" />
+              <OptimizedImage
+                src={s.img}
+                alt={s.name}
+                width={700}
+                height={394}
+                sizes="(max-width: 720px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              />
               <div className="space-card-body">
                 <p className="space-tag">{s.tag}</p>
                 <h3 className="space-name">{s.name}</h3>

@@ -9,6 +9,7 @@ import {
   IconLeaf,
   IconDining,
 } from '@/components/icons';
+import OptimizedImage from './OptimizedImage';
 
 export interface ActivityItem {
   id: string;
@@ -65,8 +66,14 @@ export default function FunContent({ activities: dbActivities }: { activities?: 
         <div className="sports-grid">
           {SPORTS.map(sport => (
             <div key={sport.id} className="sport-card">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="sport-img" src={sport.img} alt={sport.name} loading="lazy" />
+              <OptimizedImage
+                className="sport-img"
+                src={sport.img}
+                alt={sport.name}
+                width={900}
+                height={600}
+                sizes="(max-width: 720px) 100vw, (max-width: 1024px) 50vw, 50vw"
+              />
               <div className="sport-overlay" />
               <div className="sport-body">
                 <p className="sport-cat">{sport.cat}</p>
@@ -86,8 +93,13 @@ export default function FunContent({ activities: dbActivities }: { activities?: 
         <div className="water-grid">
           {WATER.map(w => (
             <div key={w.name} className="water-card">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={w.img} alt={w.name} loading="lazy" />
+              <OptimizedImage
+                src={w.img}
+                alt={w.name}
+                width={700}
+                height={394}
+                sizes="(max-width: 720px) 50vw, 33vw"
+              />
               <div className="water-card-body">
                 <div className="water-card-icon">
                   <w.Icon size={28} />
