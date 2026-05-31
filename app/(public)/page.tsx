@@ -1,14 +1,18 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import '@/styles/pages/home.css';
 import MangroveSection from '@/components/public/MangroveSection';
 import { IconBolt, IconUmbrella, IconWaves, IconCottage, IconPaw, IconPhone } from '@/components/icons';
+import { generateOgMetadata } from '@/lib/seo/og';
+import OptimizedImage from '@/components/public/OptimizedImage';
+import { resortImages } from '@/lib/image-assets';
 
-export const metadata: Metadata = {
+export const metadata = generateOgMetadata({
   title: 'Almeja Azul — LYR Beach Resort · Samal Island',
   description:
     'Five hectares of coastline, mangrove forest, and Davao Gulf light. Two beach fronts. High-speed fiber. One unhurried pace of life.',
-};
+  path: '/',
+  absoluteTitle: true,
+});
 
 const SECTIONS = [
   { label: 'Stay', sub: 'Rooms & Spaces', href: '/stay', img: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80' },
@@ -29,7 +33,18 @@ export default function HomePage() {
     <>
       {/* HERO */}
       <section className="hero">
-        <div className="hero-bg" />
+        <div className="hero-bg">
+          <OptimizedImage
+            src={resortImages.beach}
+            alt=""
+            fill
+            priority
+            fetchPriority="high"
+            quality={50}
+            sizes="100vw"
+            className="hero-bg-img"
+          />
+        </div>
         <div className="hero-vgn" />
         <div className="hero-content">
           <p className="hero-eyebrow">Brgy. Adecor · Samal Island · Davao del Norte</p>
@@ -94,8 +109,14 @@ export default function HomePage() {
         <div className="hub-grid">
           {SECTIONS.map(s => (
             <Link key={s.label} href={s.href} className="hub-card rpl">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="hub-card-img" src={s.img} alt={s.label} loading="lazy" />
+              <OptimizedImage
+                className="hub-card-img"
+                src={s.img}
+                alt={s.label}
+                width={600}
+                height={800}
+                sizes="(max-width: 720px) 50vw, (max-width: 1024px) 33vw, 20vw"
+              />
               <div className="hub-card-overlay" />
               <div className="hub-card-body">
                 <p className="hub-card-label">{s.sub}</p>
@@ -113,8 +134,12 @@ export default function HomePage() {
       {/* EVENTS TEASER */}
       <div className="events">
         <Link href="/build#weddings" className="event-half">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=85" alt="Destination Weddings" />
+          <OptimizedImage
+            src="https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=85"
+            alt="Destination Weddings"
+            fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
+          />
           <div className="event-vgn" />
           <div className="event-body">
             <p className="event-tag">Destination Wedding</p>
@@ -124,8 +149,12 @@ export default function HomePage() {
           </div>
         </Link>
         <Link href="/build#corporate" className="event-half">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=900&q=85" alt="Corporate Retreats" />
+          <OptimizedImage
+            src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=900&q=85"
+            alt="Corporate Retreats"
+            fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
+          />
           <div className="event-vgn" />
           <div className="event-body">
             <p className="event-tag">Corporate Retreat</p>
@@ -207,8 +236,7 @@ export default function HomePage() {
 
         <div className="fb-right">
           <div className="fb-right-header">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/uploads/Almeja_Logo_Large_PNG.png" alt="Almeja Azul" />
+            <OptimizedImage src={resortImages.logo} alt="Almeja Azul" width={96} height={89} sizes="48px" />
             <div>
               <div className="fb-page-name">Almeja Azul Resort</div>
               <div className="fb-page-handle">@AlmejaAzulResort</div>

@@ -1,12 +1,16 @@
-import type { Metadata } from 'next';
 import '@/styles/pages/see.css';
 import SeeContent, { TourItem } from '@/components/public/SeeContent';
 import { prisma } from '@/lib/db';
+import { generateOgMetadata } from '@/lib/seo/og';
+import OptimizedImage from '@/components/public/OptimizedImage';
+import { resortImages } from '@/lib/image-assets';
 
-export const metadata: Metadata = {
+export const metadata = generateOgMetadata({
   title: 'See & Explore',
-  description: 'Island tours, reef snorkeling, mangrove kayaking, and natural wonders around Samal Island from Almeja Azul.',
-};
+  description:
+    'Island tours, reef snorkeling, mangrove kayaking, and natural wonders around Samal Island from Almeja Azul.',
+  path: '/see',
+});
 
 function formatPrice(price: number, mode: string, customText: string): string {
   if (mode === 'INQUIRE') return 'Inquire for rates';
@@ -36,7 +40,17 @@ export default async function SeePage() {
   return (
     <>
       <section className="see-hero">
-        <div className="see-hero-bg" />
+        <div className="see-hero-bg">
+          <OptimizedImage
+            src={resortImages.reefWater}
+            alt=""
+            fill
+            priority
+            fetchPriority="high"
+            quality={50}
+            sizes="100vw"
+          />
+        </div>
         <div className="see-hero-vgn" />
         <div className="see-hero-content">
           <p className="eyebrow">Island Experiences</p>

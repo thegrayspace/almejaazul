@@ -1,12 +1,16 @@
-import type { Metadata } from 'next';
 import '@/styles/pages/fun.css';
 import FunContent, { ActivityItem } from '@/components/public/FunContent';
 import { prisma } from '@/lib/db';
+import { generateOgMetadata } from '@/lib/seo/og';
+import OptimizedImage from '@/components/public/OptimizedImage';
+import { resortImages } from '@/lib/image-assets';
 
-export const metadata: Metadata = {
+export const metadata = generateOgMetadata({
   title: 'Fun & Recreation',
-  description: 'Water sports, pickleball, kayaking, snorkeling, banana boat, pool, and beach recreation at Almeja Azul on Samal Island.',
-};
+  description:
+    'Water sports, pickleball, kayaking, snorkeling, banana boat, pool, and beach recreation at Almeja Azul on Samal Island.',
+  path: '/fun',
+});
 
 const CATEGORY_LABELS: Record<string, string> = {
   COURT_SPORT: 'Court Sport',
@@ -48,7 +52,17 @@ export default async function FunPage() {
   return (
     <>
       <section className="page-hero">
-        <div className="page-hero-bg" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1530053969600-caed2596d242?w=2000&q=85')" }} />
+        <div className="page-hero-bg">
+          <OptimizedImage
+            src={resortImages.waterSports}
+            alt=""
+            fill
+            priority
+            fetchPriority="high"
+            quality={50}
+            sizes="100vw"
+          />
+        </div>
         <div className="page-hero-vgn" />
         <div className="page-hero-content">
           <p className="hero-eyebrow">Recreation</p>

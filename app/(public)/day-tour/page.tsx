@@ -1,12 +1,16 @@
-import type { Metadata } from 'next';
 import '@/styles/pages/day-tour.css';
 import DayTourContent, { PassItem, AddOnItem } from '@/components/public/DayTourContent';
 import { prisma } from '@/lib/db';
+import { generateOgMetadata } from '@/lib/seo/og';
+import OptimizedImage from '@/components/public/OptimizedImage';
+import { resortImages } from '@/lib/image-assets';
 
-export const metadata: Metadata = {
+export const metadata = generateOgMetadata({
   title: 'Day Tour',
-  description: 'No overnight stay required. Two beach fronts, infinity pool, water sports, fresh food, and high-speed WiFi. Walk-ins welcome, pets welcome.',
-};
+  description:
+    'No overnight stay required. Two beach fronts, infinity pool, water sports, fresh food, and high-speed WiFi. Walk-ins welcome, pets welcome.',
+  path: '/day-tour',
+});
 
 function formatPrice(price: number, mode: string, customText: string): string {
   if (mode === 'INQUIRE') return 'Inquire for rates';
@@ -54,7 +58,17 @@ export default async function DayTourPage() {
   return (
     <>
       <section className="dt-hero">
-        <div className="dt-hero-bg" />
+        <div className="dt-hero-bg">
+          <OptimizedImage
+            src={resortImages.beach}
+            alt=""
+            fill
+            priority
+            fetchPriority="high"
+            quality={50}
+            sizes="100vw"
+          />
+        </div>
         <div className="dt-hero-vgn" />
         <div className="dt-hero-content">
           <p className="eyebrow">The Day Pass · Open Daily · Walk-ins Welcome</p>

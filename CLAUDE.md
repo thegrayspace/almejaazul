@@ -131,6 +131,24 @@ Prisma v6 — `datasource db` block must only have `provider` and `url`. No `con
 
 ---
 
+## Admin Auth Architecture (hard-won — do not regress)
+
+### How it works
+- iron-session v8 with `getIronSession(await cookies(), SESSION_OPTIONS)` in every route
+- All 31 admin pages call `requireAdminSession()` from `lib/auth.ts` directly (no middleware)
+- Middleware (`middleware.ts`) is a no-op — kept as a landing spot but does not protect anything
+
+### Critical gotcha: never use `<Link>` for the logout button
+The dashboard (`app/admin/page.tsx`) uses a plain `<a href="/api/admin/logout">` for Sign Out — **not** `<Link>`. Next.js prefetches every `<Link>` component in the viewport at page load. A prefetch GET to `/api/admin/logout` executes the logout handler and clears the session cookie, logging the user out silently before they click anything. This caused a multi-hour redirect loop that only appeared in production (where Vercel's Neon cold-starts made prefetch failures non-cacheable, forcing credential-less retries).
+
+### Why `prefetch={false}` on admin grid links
+All nav grid links in the dashboard use `prefetch={false}`. Without it, Neon cold-start 503s on RSC prefetch requests are not cached; when the user then clicks, Next.js makes a fresh RSC request that — if the session cookie was already wiped by the logout prefetch bug — would have no cookie and redirect to login.
+
+### Middleware was removed from the auth path
+An earlier attempt added iron-session unseal logic to Edge Runtime middleware. This caused redirect loops on Vercel because `process.env.AUTH_SECRET` behaves differently at module-init time in Edge Runtime. Auth is now 100% in Node.js runtime (individual page `requireAdminSession()` calls).
+
+---
+
 ## Design System
 - **Brand colors:** `#1a2530` (dark navy), `#4BBFE0` (teal), `#f0ece3` (warm off-white)
 - **No Tailwind** — all styling is CSS classes from `styles/` or inline `style={{}}` objects

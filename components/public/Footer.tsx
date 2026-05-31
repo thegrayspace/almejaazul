@@ -1,11 +1,13 @@
 import Link from 'next/link';
+import OptimizedImage from './OptimizedImage';
+import { resortImages } from '@/lib/image-assets';
 
 export default function Footer() {
   return (
     <footer className="site-footer">
       <div className="footer-grid">
         <div className="footer-brand">
-          <img src="/uploads/Almeja_Logo_Large_PNG.png" alt="Almeja Azul" />
+          <OptimizedImage src={resortImages.logo} alt="Almeja Azul" width={96} height={89} sizes="44px" />
           <p>Five hectares of white sand on Samal Island, Davao del Norte.</p>
           <div className="footer-social">
             <a href="https://www.facebook.com/AlmejaAzulResort/" target="_blank" rel="noopener noreferrer" className="f-soc">FB</a>

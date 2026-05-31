@@ -18,6 +18,7 @@ import {
   IconCoffee,
   IconSunset,
 } from '@/components/icons';
+import OptimizedImage from './OptimizedImage';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -174,8 +175,7 @@ function PassModal({ pass, onClose }: { pass: PassData; onClose: () => void }) {
     >
       <div className="modal">
         <div className="m-gallery">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={pass.img} alt={pass.name} />
+          <OptimizedImage src={pass.img} alt={pass.name} width={1200} height={800} sizes="(max-width: 720px) 100vw, 50vw" />
           <button className="m-close" onClick={onClose}>✕</button>
         </div>
 
@@ -403,15 +403,19 @@ export default function DayTourContent({ passes: dbPasses, addons: dbAddons }: {
           </div>
 
           <div className="schedule-img-stack">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <OptimizedImage
               src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=700&q=80"
               alt="Beach at Almeja Azul"
+              width={700}
+              height={438}
+              sizes="(max-width: 1024px) 100vw, 50vw"
             />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <OptimizedImage
               src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=700&q=80"
               alt="Infinity pool"
+              width={700}
+              height={394}
+              sizes="(max-width: 1024px) 100vw, 50vw"
             />
           </div>
         </div>

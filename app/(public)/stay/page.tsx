@@ -1,13 +1,16 @@
-import type { Metadata } from 'next';
 import '@/styles/pages/stay.css';
 import StayGrid from '@/components/public/StayGrid';
 import { prisma } from '@/lib/db';
+import { generateOgMetadata } from '@/lib/seo/og';
+import OptimizedImage from '@/components/public/OptimizedImage';
+import { resortImages } from '@/lib/image-assets';
 
-export const metadata: Metadata = {
+export const metadata = generateOgMetadata({
   title: 'Rooms & Spaces',
   description:
     'Aircon rooms for 2 to 12 guests on Samal Island. All with full beach access, infinity pool, and high-speed fiber WiFi.',
-};
+  path: '/stay',
+});
 
 function formatPrice(amount: number, mode: string, suffix: string): string {
   if (mode === 'INQUIRE') return 'Inquire';
@@ -65,10 +68,17 @@ export default async function StayPage() {
   return (
     <>
       <section className="page-hero">
-        <div
-          className="page-hero-bg"
-          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=2000&q=85')" }}
-        />
+        <div className="page-hero-bg">
+          <OptimizedImage
+            src={resortImages.grandRoom}
+            alt=""
+            fill
+            priority
+            fetchPriority="high"
+            quality={50}
+            sizes="100vw"
+          />
+        </div>
         <div className="page-hero-vgn" />
         <div className="page-hero-content">
           <p className="s-eyebrow-light">Where You Stay</p>

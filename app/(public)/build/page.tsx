@@ -1,14 +1,18 @@
-import type { Metadata } from 'next';
 import '@/styles/pages/build.css';
 import BuildTabs, { PackageItem, VenueItem } from '@/components/public/BuildTabs';
 import { prisma } from '@/lib/db';
+import { generateOgMetadata } from '@/lib/seo/og';
+import OptimizedImage from '@/components/public/OptimizedImage';
+import { resortImages } from '@/lib/image-assets';
 
 export const dynamic = 'force-dynamic';
 
-export const metadata: Metadata = {
+export const metadata = generateOgMetadata({
   title: 'Build Your Event',
-  description: 'Corporate retreats, team building, destination weddings, and private events at Almeja Azul on Samal Island.',
-};
+  description:
+    'Corporate retreats, team building, destination weddings, and private events at Almeja Azul on Samal Island.',
+  path: '/build',
+});
 
 function formatPrice(price: number, mode: string, customText: string): string {
   if (mode === 'INQUIRE') return 'Custom package — message us';
@@ -54,7 +58,17 @@ export default async function BuildPage() {
   return (
     <>
       <section className="page-hero">
-        <div className="page-hero-bg" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=2000&q=85')" }} />
+        <div className="page-hero-bg">
+          <OptimizedImage
+            src={resortImages.corporateRetreat}
+            alt=""
+            fill
+            priority
+            fetchPriority="high"
+            quality={50}
+            sizes="100vw"
+          />
+        </div>
         <div className="page-hero-vgn" />
         <div className="page-hero-content">
           <p className="hero-eyebrow">Events &amp; Weddings</p>
