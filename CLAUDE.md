@@ -138,11 +138,13 @@ Prisma v6 — `datasource db` block must only have `provider` and `url`. No `con
 - All 31 admin pages call `requireAdminSession()` from `lib/auth.ts` directly (no middleware)
 - Middleware (`middleware.ts`) is a no-op — kept as a landing spot but does not protect anything
 
-### Critical gotcha: never use `<Link>` for the logout button
-The dashboard (`app/admin/page.tsx`) uses a plain `<a href="/api/admin/logout">` for Sign Out — **not** `<Link>`. Next.js prefetches every `<Link>` component in the viewport at page load. A prefetch GET to `/api/admin/logout` executes the logout handler and clears the session cookie, logging the user out silently before they click anything. This caused a multi-hour redirect loop that only appeared in production (where Vercel's Neon cold-starts made prefetch failures non-cacheable, forcing credential-less retries).
+### Critical gotcha: logout (and any state-mutating route) MUST be POST-only
+`/api/admin/logout` is **POST-only** (returns a 303 redirect). Sign Out is rendered as a `<form action="/api/admin/logout" method="post">` button — in **both** `app/admin/page.tsx` and `components/admin/AdminShell.tsx` (the shell that wraps every CRUD page). Never expose it as a GET, and never use `<Link>`/`<a href>` for it.
 
-### Why `prefetch={false}` on admin grid links
-All nav grid links in the dashboard use `prefetch={false}`. Without it, Neon cold-start 503s on RSC prefetch requests are not cached; when the user then clicks, Next.js makes a fresh RSC request that — if the session cookie was already wiped by the logout prefetch bug — would have no cookie and redirect to login.
+**Why (hard-won, regressed twice):** Next.js prefetches every `<Link>` in the viewport, browsers preconnect, and crawlers issue GETs. When logout was a GET reachable via `<Link>`, merely *rendering* a page fired a background GET to the logout handler, which cleared the session cookie (`Set-Cookie: almeja_session=; Max-Age=0`) — silently logging the user out before any click. This caused a multi-hour redirect loop in production (Vercel Neon cold-starts made the prefetch failures non-cacheable, forcing credential-less retries). The first fix only changed the dashboard to `<a>` and missed `AdminShell`, so the bug relocated: list pages loaded fine, but the next click (e.g. Edit) bounced to `/admin/login`. Making the route POST-only retires the entire bug class — no GET path can reach it. (Fixed permanently in commit `a7d83e7`, 2026-05-31.)
+
+### Why `prefetch={false}` on admin links
+The dashboard grid links and the Edit / +Add links on all 9 admin list pages use `prefetch={false}`. Now that logout is POST-only this is **only a perf nicety** (avoids wasted RSC prefetches that trigger Neon cold-start queries) — it is no longer load-bearing for auth correctness.
 
 ### Middleware was removed from the auth path
 An earlier attempt added iron-session unseal logic to Edge Runtime middleware. This caused redirect loops on Vercel because `process.env.AUTH_SECRET` behaves differently at module-init time in Edge Runtime. Auth is now 100% in Node.js runtime (individual page `requireAdminSession()` calls).
