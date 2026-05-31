@@ -15,7 +15,7 @@ export default async function AdminActivitiesPage() {
     <AdminShell title="Activities">
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 28 }}>
         <p style={{ fontSize: 14, color: 'rgba(26,37,48,0.55)', margin: 0 }}>{activities.length} activit{activities.length !== 1 ? 'ies' : 'y'} total</p>
-        <Link href="/admin/activities/new" style={{ padding: '10px 24px', background: '#4BBFE0', color: '#1a2530', textDecoration: 'none', borderRadius: 100, fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase' }}>+ Add Activity</Link>
+        <Link href="/admin/activities/new" prefetch={false} style={{ padding: '10px 24px', background: '#4BBFE0', color: '#1a2530', textDecoration: 'none', borderRadius: 100, fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase' }}>+ Add Activity</Link>
       </div>
       {activities.length === 0 ? (
         <div style={{ background: '#fff', borderRadius: 8, padding: '48px 32px', textAlign: 'center', boxShadow: '0 2px 12px rgba(26,37,48,0.06)' }}><p style={{ color: 'rgba(26,37,48,0.4)', fontSize: 14 }}>No activities yet.</p></div>
@@ -30,7 +30,7 @@ export default async function AdminActivitiesPage() {
               </div>
               {act.isPlaceholder && <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#888', background: 'rgba(0,0,0,0.07)', padding: '4px 10px', borderRadius: 100 }}>Coming Soon</span>}
               <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: act.isPublished ? '#2a9d5c' : 'rgba(26,37,48,0.4)', background: act.isPublished ? 'rgba(42,157,92,0.1)' : 'rgba(26,37,48,0.07)', padding: '4px 10px', borderRadius: 100 }}>{act.isPublished ? 'Published' : 'Draft'}</span>
-              <Link href={`/admin/activities/${act.id}`} style={{ padding: '8px 20px', background: 'transparent', color: '#1a2530', textDecoration: 'none', borderRadius: 100, fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', border: '1.5px solid rgba(26,37,48,0.2)', flexShrink: 0 }}>Edit</Link>
+              <Link href={`/admin/activities/${act.id}`} prefetch={false} style={{ padding: '8px 20px', background: 'transparent', color: '#1a2530', textDecoration: 'none', borderRadius: 100, fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', border: '1.5px solid rgba(26,37,48,0.2)', flexShrink: 0 }}>Edit</Link>
             </div>
           ))}
         </div>

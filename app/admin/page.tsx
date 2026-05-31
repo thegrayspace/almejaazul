@@ -33,7 +33,11 @@ export default async function AdminDashboard() {
         </div>
         <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
           <Link href="/" style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', textDecoration: 'none' }}>← View site</Link>
-          <a href="/api/admin/logout" style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.45)', textDecoration: 'none' }}>Sign out</a>
+          {/* POST form, NOT a <Link>/<a>: logout clears the session cookie, so it
+              must not be reachable via GET. See CLAUDE.md "Admin Auth". */}
+          <form action="/api/admin/logout" method="post" style={{ margin: 0 }}>
+            <button type="submit" style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit', fontSize: 11, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.45)' }}>Sign out</button>
+          </form>
         </div>
       </div>
 

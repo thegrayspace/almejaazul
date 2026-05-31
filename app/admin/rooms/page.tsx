@@ -23,6 +23,7 @@ export default async function AdminRoomsPage() {
         </p>
         <Link
           href="/admin/rooms/new"
+          prefetch={false}
           style={{
             padding: '10px 24px',
             background: '#4BBFE0',
@@ -133,6 +134,7 @@ export default async function AdminRoomsPage() {
                 {/* Edit button */}
                 <Link
                   href={`/admin/rooms/${room.id}`}
+                  prefetch={false}
                   style={{
                     padding: '8px 20px',
                     background: 'transparent',

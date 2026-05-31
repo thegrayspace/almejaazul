@@ -30,6 +30,7 @@ export default async function AdminFAQsPage() {
         </p>
         <Link
           href="/admin/faqs/new"
+          prefetch={false}
           style={{
             padding: '10px 24px',
             background: '#4BBFE0',
@@ -127,6 +128,7 @@ export default async function AdminFAQsPage() {
                     {/* Edit link */}
                     <Link
                       href={`/admin/faqs/${faq.id}`}
+                      prefetch={false}
                       style={{
                         padding: '8px 20px',
                         background: 'transparent',
